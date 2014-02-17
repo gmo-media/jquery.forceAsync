@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Demo: Blocking Script with jQuery.forceAsync</title>
+</head>
+<body>
+
+<h1>Demo: Blocking Script with jQuery.forceAsync</h1>
+<p>Show the Console tab in the developer tools.</p>
+
+<script>console.log('before case1')</script>
+
+<h2>Case-1</h2>
+<noscript src="legacy.js" data-forceAsync></noscript>
+
+<script>console.log('after case1 & before case2')</script>
+
+<h2>Case-2</h2>
+<noscript data-forceAsync>
+<!--
+var src = "legacy2.js";
+document.write('<'+'script src="'+src+'"><\/script>');
+// -->
+</noscript>
+
+<script>console.log('after case2')</script>
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="../dist/jquery.forceAsync.min.js"></script>
+<script>$.forceAsync.config({static_frame:'../dist/forceAsync.html'});</script>
+</body>
+</html>
