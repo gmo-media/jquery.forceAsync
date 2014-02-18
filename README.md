@@ -8,20 +8,18 @@
 
 ## 使い方
 
-1. まず、`dist/`以下のファイルをサーバに配置します。（ここでは`/js/jquery.forceAsync`に配置したものとします。）
-
+1. まず、`dist/`以下のファイルをサーバに配置します。（ここでは`../js/jquery.forceAsync/`に配置したものとします。）
   - スクリプトはCDNなどに置いても構いませんが、`forceAsync.html`だけはサイトと同じサーバに置いてください。（正確には同じオリジンで参照できる場所）
 
 1. ページの`head`タグ内に以下の内容を記述します。
   
   ```html
   <script src="//code.jquery.com/jquery.min.js"></script>
-  <script src="/js/jquery.forceAsync/jquery.forceAsync.min.js"></script>
-  <script>$.forceAsync.config({path:'/js/jquery.forceAsync'});</script>
+  <script src="../js/jquery.forceAsync/jquery.forceAsync.min.js"></script>
+  <script>$.forceAsync.config({path:'../js/jquery.forceAsync/'});</script>
   ```
-
   - jQuery本体はサイトで利用しているものを指定してください。
-  - `path`には`forceAsync.html`のパスを指定してください。そのページからの相対パスでも大丈夫です。
+  - `path`には`forceAsync.html`へのパスを指定してください。絶対パスでも大丈夫です。
 
 1. 非同期化したいスクリプトの`script`タグを`noscript`に変更し、`data-forceAsync`属性を追加します。
 
@@ -65,7 +63,7 @@
 
 ### 早期読み込み
 
-各スクリプトの読み込みは`$(document).ready()`のタイミングで始まるので、ページのボリュームが大きいとスクリプトが実行されるまでの時間も遅くなります。
+各スクリプトの読み込みは`$(document).ready()`で始めるので、ページのボリュームが大きいとスクリプトが実行されるまでの時間も遅くなります。
 
 そのような場合は以下のコードを任意の位置に記述することで、それまでに非同期化指定したスクリプトを読み込み始めることができます。
 
@@ -87,4 +85,8 @@
 - このプラグインはまだ実験段階です。
 - 古いIEでは動かない可能性が高いです。（IE11、Chrome、Firefoxでは動作するようです。）
 - スクリプトの内容によっても正しく動かない可能性があります。
+
+## 分かっている問題
+
+- スクリプトが出力するコンテンツがマージンを持っている場合、その前後の要素が持つマージンとの相殺（マージンの重なり）は行われなくなります。
 
