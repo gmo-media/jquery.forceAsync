@@ -20,6 +20,7 @@
             + ' frameborder="0" marginwidth="0" marginheight="0" scrolling="no"'
             + ' allowtransparency="true" seamless />');
         $target.replaceWith(this.$iframe);
+        console.log('forceAsync: find "'+ this.id + '"');
     };
 
     // instance method
@@ -37,6 +38,7 @@
             });
         },
         '_loadToDynamicFrame': function() {
+            console.log('forceAsync: load "'+ this.id+ '" to dynamic frame');
             var doc = this.contentDocument();
             doc.open('text/html');
             try {
@@ -49,6 +51,7 @@
             finally { doc.close() }
         },
         '_loadToStaticFrame': function() {
+            console.log('forceAsync: load "'+ this.id + '" to static frame');
             var frm = this.$iframe.get(0);
             frm.name = this.id;
             frm.src = Config.path + 'forceAsync.html';
@@ -69,15 +72,17 @@
         },
         'getScript': function(id) {
             return Scripts[id];
+        },
+        'exec': function() {
+            console.log('forceAsync: exec');
+            $('noscript[data-forceAsync]').each(function(){
+                var script = new $.forceAsync(this);
+                script.load();
+                Scripts[script.id] = script;
+            });
         }
     });
 
     // initialize
-    $(function(){
-        $('noscript[data-forceAsync]').each(function(){
-            var script = new $.forceAsync(this);
-            script.load();
-            Scripts[script.id] = script;
-        });
-    });
+    $($.forceAsync.exec);
 })(jQuery);

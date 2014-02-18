@@ -55,7 +55,7 @@
     // 環境に関するオプション
     "browser":           true,      // モダンブラウザ指定
     "couch":            false,      // CouchDB指定
-    "devel":            false,      // consoleやalertなどのデバッグ用ログの使用を指定
+    "devel":             true,      // consoleやalertなどのデバッグ用ログの使用を指定
     "dojo":             false,      // Dojo Toolkit指定
     "jquery":            true,      // jQueryライブラリ使用指定
     "mootools":         false,      // Mootoolsフレームワーク使用指定

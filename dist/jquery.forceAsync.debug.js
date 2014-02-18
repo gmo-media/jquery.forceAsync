@@ -30,7 +30,7 @@
             + ' frameborder="0" marginwidth="0" marginheight="0" scrolling="no"'
             + ' allowtransparency="true" seamless />');
         $target.replaceWith(this.$iframe);
-        // remove debugging code
+        console.log('forceAsync: find "'+ this.id + '"');
     };
 
     // instance method
@@ -48,7 +48,7 @@
             });
         },
         '_loadToDynamicFrame': function() {
-            // remove debugging code
+            console.log('forceAsync: load "'+ this.id+ '" to dynamic frame');
             var doc = this.contentDocument();
             doc.open('text/html');
             try {
@@ -61,7 +61,7 @@
             finally { doc.close() }
         },
         '_loadToStaticFrame': function() {
-            // remove debugging code
+            console.log('forceAsync: load "'+ this.id + '" to static frame');
             var frm = this.$iframe.get(0);
             frm.name = this.id;
             frm.src = Config.path + 'forceAsync.html';
@@ -84,7 +84,7 @@
             return Scripts[id];
         },
         'exec': function() {
-            // remove debugging code
+            console.log('forceAsync: exec');
             $('noscript[data-forceAsync]').each(function(){
                 var script = new $.forceAsync(this);
                 script.load();

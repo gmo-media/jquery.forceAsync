@@ -22,7 +22,7 @@ module.exports = (grunt) ->
                    */\n
                   '''
         files:
-          'dist/jquery.forceAsync.js': ['src/jquery.forceAsync.js']
+          'dist/jquery.forceAsync.debug.js': ['src/main.js']
       iframe:
         files:
           'tmp/forceAsync.html': ['src/iframe_part_A.html', 'tmp/iframe_inline.min.js', 'src/iframe_part_B.html']
@@ -39,9 +39,16 @@ module.exports = (grunt) ->
       options:
         jshintrc: '.jshintrc'
       files: [
-        'src/jquery.forceAsync.dev.js'
+        'src/main.js'
         'src/iframe_inline.js'
       ]
+
+    removelogging:
+      options:
+        replaceWith: '// remove debugging code'
+      files:
+        src:  'dist/jquery.forceAsync.debug.js'
+        dest: 'dist/jquery.forceAsync.js'
 
     uglify:
       mainjs:
@@ -65,14 +72,14 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-htmlmin'
   grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-remove-logging'
 
   grunt.registerTask 'default', [
     'clean:start',
     'jshint',
-    'concat:mainjs', 'uglify:mainjs',
+    'concat:mainjs', 'removelogging', 'uglify:mainjs',
     'uglify:iframe', 'concat:iframe', 'htmlmin:iframe',
     'clean:finish'
   ]
-
   grunt.registerTask 'test', ['jshint']
 
