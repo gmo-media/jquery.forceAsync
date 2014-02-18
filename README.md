@@ -10,8 +10,16 @@
 
 ## 使い方
 
-非同期化したいスクリプトの`script`タグを`noscript`に変更し、`data-forceAsync`属性を追加します。
-あとはページのどこかで`dist/jquery.forceAsync.min.js`を読み込めば完了です。（読み込み位置はどこでも構いません。）
+1. まず、`dist/`以下のファイルをサーバに置きます。（ここでは`/js/jquery.forceAsync`に置いたものとします。）
+
+1. 非同期化したいスクリプトの`script`タグを`noscript`に変更して`data-forceAsync`属性を追加し、ページのどこかに
+  
+  ```html
+  <script src="/js/jquery.forceAsync/jquery.forceAsync.min.js"></script>
+  <script>$.forceAsync.config({path:'/js/jquery.forceAsync'});</script>
+  ```
+  
+  を記述します。<br/>
 
 ### 外部ファイルを非同期化する
 

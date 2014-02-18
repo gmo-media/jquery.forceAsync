@@ -6,11 +6,11 @@
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-02-16T23:29:34Z
+ * Date: 2014-02-18T02:16:09Z
  */
 (function($){
-    var Count = 0, DynamicLoad = !document.all, ObjPool = {}, Config = {
-        'static_frame': 'forceAsync.html'
+    var Count = 0, DynamicLoad = !document.all, Scripts = {}, Config = {
+        'path': './'
     };
 
     // constructor
@@ -61,7 +61,7 @@
         '_loadToStaticFrame': function() {
             var frm = this.$iframe.get(0);
             frm.name = this.id;
-            frm.src = Config.static_frame;
+            frm.src = Config.path + 'forceAsync.html';
         },
         'contentDocument': function() {
             var frm = this.$iframe.get(0);
@@ -73,9 +73,12 @@
     $.extend($.forceAsync, {
         'config': function(options) {
             $.extend(Config, options);
+            if (/\/$/.test(Config.path)) {
+                Config.path += '/';
+            }
         },
         'getScript': function(id) {
-            return ObjPool[id];
+            return Scripts[id];
         }
     });
 
@@ -84,7 +87,7 @@
         $('noscript[data-forceAsync]').each(function(){
             var script = new $.forceAsync(this);
             script.load();
-            ObjPool[script.id] = script;
+            Scripts[script.id] = script;
         });
     });
 })(jQuery);

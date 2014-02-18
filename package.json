@@ -2,7 +2,7 @@
     "title": "jQuery Force Async",
     "name": "forceAsync",
     "version": "0.0.1",
-    "description": "Load the script asynchronously forcibly.",
+    "description": "Load any script asynchronously.",
     "keywords": ["script", "async", "defer"],
     "homepage": "https://github.com/gmo-media/jquery.forceAsync",
     "author": {
