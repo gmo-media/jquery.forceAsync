@@ -34,7 +34,9 @@
 
             var that = this;
             this.$iframe.load(function(){
-                that.$iframe.height($(that.contentDocument().body).height());
+                console.log('forceAsync: loaded "' + that.id + '" (height='
+                    + $(that.contentDocument()).height() + ')');
+                that.$iframe.height($(that.contentDocument()).height());
             });
         },
         '_loadToDynamicFrame': function() {

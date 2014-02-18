@@ -6,13 +6,19 @@
 <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script src="../dist/jquery.forceAsync.debug.js"></script>
 <script>$.forceAsync.config({path:'../dist/'});</script>
+<script>
+var time0 = Date.now();
+function write_time(label) {
+  console.log(label + ': ' + (Date.now() - time0) + 'ms');
+}
+document.addEventListener('DOMContentLoaded', function(){ write_time('DOMContentLoaded') });
+window.addEventListener('load', function(){ write_time('window.load') });
+</script>
 </head>
 <body>
 
-<script>var time0 = Date.now();</script>
-
 <h1>Demo: Blocking Ads with jQuery.forceAsync</h1>
-<p>Show the Network tab in the developer tools.</p>
+<p>Show the Network & Console tab in the developer tools.</p>
 
 <h2>Adingo</h2>
 <div style="text-align:center;">
@@ -50,11 +56,6 @@ if (location.protocol=='https:') {
 }
 //]]>--></noscript><noscript><a href='http://adf.send.microad.jp/ck.php?n=a3bcfc67&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://adf.send.microad.jp/avw.php?zoneid=14557&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a3bcfc67&amp;ct0=INSERT_CLICKURL_HERE&amp;snr=1' border='0' alt='' /></a></noscript>
 </div>
-
-<script>
-var time1 = Date.now();
-document.write((time1 - time0), 'ms');
-</script>
 
 </body>
 </html>

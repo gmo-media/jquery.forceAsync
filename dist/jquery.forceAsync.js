@@ -1,12 +1,12 @@
 /**
- * jQuery Force Async v0.0.2
+ * jQuery Force Async v0.0.3
  * https://github.com/gmo-media/jquery.forceAsync
  *
  * Copyright 2014 GMO Media,Inc.
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-02-18T04:29:10Z
+ * Date: 2014-02-18T06:00:24Z
  */
 (function($){
     var Count = 0, DynamicLoad = !document.all, Scripts = {}, Config = {
@@ -44,7 +44,8 @@
 
             var that = this;
             this.$iframe.load(function(){
-                that.$iframe.height($(that.contentDocument().body).height());
+                // remove debugging code
+                that.$iframe.height($(that.contentDocument()).height());
             });
         },
         '_loadToDynamicFrame': function() {
