@@ -8,24 +8,22 @@
 
 ## 使い方
 
-1. まず、`dist/`以下のファイルをサーバに配置します。（ここでは`../js/jquery.forceAsync/`に配置したものとします。）
+1. まず、`dist/`以下のファイルをサーバに配置します。（ここでは`../jquery/forceAsync/`に配置したものとします。）
   - スクリプトはCDNなどに置いても構いませんが、`forceAsync.html`だけはサイトと同じサーバに置いてください。（正確には同じオリジンで参照できる場所）
 
-1. ページの`head`タグ内に以下の内容を記述します。
+1. 次に、ページのどこか（jQuery本体の読み込みより後）に以下のタグを記述します。
   
   ```html
-  <script src="//code.jquery.com/jquery.min.js"></script>
-  <script src="../js/jquery.forceAsync/jquery.forceAsync.min.js"></script>
-  <script>$.forceAsync.config({path:'../js/jquery.forceAsync/'});</script>
+  <script src="../jquery/forceAsync/jquery.forceAsync.min.js"></script>
+  <script>$.forceAsync.config({path:'../jquery/forceAsync/'});</script>
   ```
-  - jQuery本体はサイトで利用しているものを指定してください。
   - `path`には`forceAsync.html`へのパスを指定してください。絶対パスでも大丈夫です。
 
-1. 非同期化したいスクリプトの`script`タグを`noscript`に変更し、`data-forceAsync`属性を追加します。
+1. 最後に、非同期化したいスクリプトの`script`タグを`forceasync`タグに変更します。
 
 ### 外部ファイルを非同期化する
 
-こういうのは
+`src`属性でJavaScriptファイルを指定しているものは、
 
 ```html
 <script src="legacy.js"></script>
@@ -34,12 +32,14 @@
 こうします。閉じタグ直すのも忘れずに。
 
 ```html
-<noscript src="legacy.js" data-forceAsync></noscript>
+<forceasync src="legacy.js" data-forceAsync></forceasync>
 ```
+
+もし、`charset`などの属性があるときはそのまま指定しておいてください。
 
 ### インラインスクリプトを非同期化する
 
-ごちゃごちゃしたネットワーク広告みたいなやつも
+ごちゃごちゃしたネットワーク広告みたいなやつも、
 
 ```html
 <script>
@@ -52,38 +52,63 @@
 こうするだけ。スクリプト自体に手を入れる必要はありません。
 
 ```html
-<noscript data-forceAsync>
+<forceasync>
 <!--
 /* document.writeでscriptタグを生成している複雑なスクリプト */
 // -->
-</noscript>
+</forceasync>
 ```
 
-元のスクリプトがコメントタグで囲まれていなくても、noscriptに変えるのでコメントタグで囲んだほうがよいです。
+もし、元のスクリプトがコメントタグで囲まれていない場合はコメントタグで囲んでください。
 
 ### 早期読み込み
 
-各スクリプトの読み込みは`$(document).ready()`で始めるので、ページのボリュームが大きいとスクリプトが実行されるまでの時間も遅くなります。
-そのような場合は以下のコードを任意の位置に記述することで、それまでに非同期化指定したスクリプトを読み込み始めることができます。
+スクリプトを読み込みは`$(document).ready()`で始めるので、ページのボリュームなどによっては読み込みがなかなか始まりません。
+そのような場合は次のコードを任意の場所に書いてください。
 
 ```html
 <script>$.forceAsync.exec();</script>
 ```
 
-これは非同期化指定したスクリプトごとに書いてもいいし、いくつかの指定の後に書いても構いません。
+このコードはそれまでに指定された`forceasync`スクリプトを読み込み始めます。
+`forceasync`タグごとに書いてもいいし、いくつかの指定の後に書いても構いません。
 
 ※`$(document).ready()`では`$.forceAsync.exec()`を呼んでいるだけです。
-
-### script要素の属性について
-
-元のscriptタグに`charset`などの属性が指定されている場合は、そのまま指定しておいてください。
-あくまで`script`を`noscript`に変更し、`data-forceAsync`属性を追加するだけです。
 
 ## 注意
 
 - このプラグインはまだ実験段階です。
-- 古いIEでは動かない可能性が高いです。（IE11、Chrome、Firefoxでは動作するようです。）
 - スクリプトの内容によっても正しく動かない可能性があります。
+
+## 動作を確認した環境
+
+以下の環境でdemoのHTMLが動作することを確認しています。
+
+### Windows
+
+- Internet Explorer
+  - IE11 - Win8.1? / Win7
+  - IE10 - Win8 / Win7?
+  - IE9 - Win7
+  - IE8 - WinXP
+  - IE7 - Vista 未対応
+- Chrome 32.0
+- Firefox 27.0
+- Opera 19.0
+
+### Mac
+
+- Safari 未検証
+- Chrome 未検証
+- Firefox 未検証
+
+### iOS
+
+- Safari - iOS7
+
+### Android
+
+- Browser - 未検証
 
 ## 分かっている問題
 

@@ -22,6 +22,7 @@ var time0, timelog;
             init: function() {
                 con.doc = window.open('', '_blank').document;
                 con.doc.open('text/html');
+                con.doc.write('<h1>console.log</h1>');
             }
         };
         con.init();

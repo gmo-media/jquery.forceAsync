@@ -3,7 +3,7 @@
         return c.toUpperCase();
     }
 
-    function parentStyle(style) {
+    function setStyle(style) {
         var styles = style.split(/; */),
             container = d.getElementById('c'),
             i, len, kv;
@@ -26,7 +26,7 @@
             catch (e) {}
 
             if (script.style !== '') {
-                parentStyle(script.style);
+                setStyle(script.style);
             }
         }
     }

@@ -21,6 +21,7 @@
         "url": "git@github.com:gmo-media/jquery.forceAsync.git"
     },
     "bugs": "https://github.com/gmo-media/jquery.forceAsync/issues",
+    "demo": "http://iro1.gmo-media.jp/jquery.forceAsync/demo/",
     "scripts": {
         "test": "grunt test -v"
     },
