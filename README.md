@@ -76,13 +76,15 @@
 
 ## 動作を確認した環境
 
-以下の環境でdemoのHTMLが動作することを確認しています。
+demoのHTMLが動作するか確認した環境です。
 
 ### Windows
 
 - Internet Explorer
-  - IE11 - Win8.1? / Win7
-  - IE10 - Win8 / Win7?
+  - IE11 - Win8.1 未検証
+  - IE11 - Win7
+  - IE10 - Win8
+  - IE10 - Win7 未検証
   - IE9 - Win7
   - IE8 - WinXP
   - IE7 - Vista 未対応
