@@ -19,27 +19,22 @@
   ```
   - `path`には`forceAsync.html`へのパスを指定してください。絶対パスでも大丈夫です。
 
-1. 最後に、非同期化したいスクリプトの`script`タグを`forceasync`タグに変更します。
+1. 最後に、非同期化したいスクリプトの`script`タグを`forceasync`タグに変更します。閉じタグを直すのも忘れずに。
 
-### 外部ファイルを非同期化する
-
-`src`属性でJavaScriptファイルを指定しているものは、
+### `src`属性でJavaScriptファイルを指定しているもの
 
 ```html
 <script src="legacy.js"></script>
 ```
 
-こうします。閉じタグ直すのも忘れずに。
-
-```html
-<forceasync src="legacy.js" data-forceAsync></forceasync>
-```
-
+こういうのはタグを直すだけでOK。
 もし、`charset`などの属性があるときはそのまま指定しておいてください。
 
-### インラインスクリプトを非同期化する
+```html
+<forceasync src="legacy.js"></forceasync>
+```
 
-ごちゃごちゃしたネットワーク広告みたいなやつも、
+### インラインスクリプトでscriptタグを生成しているもの
 
 ```html
 <script>
@@ -49,7 +44,8 @@
 </script>
 ```
 
-こうするだけ。スクリプト自体に手を入れる必要はありません。
+こういうのもタグを直すだけ。
+もし、元のスクリプトがコメントタグで囲まれていない場合はコメントタグで囲んでください。
 
 ```html
 <forceasync>
@@ -58,8 +54,6 @@
 // -->
 </forceasync>
 ```
-
-もし、元のスクリプトがコメントタグで囲まれていない場合はコメントタグで囲んでください。
 
 ### 早期読み込み
 
@@ -70,7 +64,7 @@
 <script>$.forceAsync.exec();</script>
 ```
 
-このコードはそれまでに指定された`forceasync`スクリプトを読み込み始めます。
+このコードはそれまでにforceAsync指定したスクリプトを読み込み始めます。
 `forceasync`タグごとに書いてもいいし、いくつかの指定の後に書いても構いません。
 
 ※`$(document).ready()`では`$.forceAsync.exec()`を呼んでいるだけです。
