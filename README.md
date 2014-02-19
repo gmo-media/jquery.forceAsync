@@ -21,7 +21,7 @@
 
 1. 最後に、非同期化したいスクリプトの`script`タグを`forceasync`タグに変更します。閉じタグを直すのも忘れずに。
 
-### `src`属性でJavaScriptファイルを指定しているもの
+### src属性でJavaScriptファイルを指定しているもの
 
 ```html
 <script src="legacy.js"></script>
