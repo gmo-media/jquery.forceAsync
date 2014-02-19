@@ -3,28 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Demo: Blocking Script</title>
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="demo.js"></script>
 </head>
 <body>
 
 <h1>Demo: Blocking Script</h1>
 <p>Show the Console tab in the developer tools.</p>
 
-<script>console.log('before case1')</script>
+<script>timelog('before external script');</script>
 
-<h2>Case-1</h2>
-<script src="legacy.js"></script>
+<h2>External Script</h2>
+<script src="/cgi-bin/sleep_js.cgi?sleep=2"></script>
 
-<script>console.log('after case1 & before case2')</script>
+<script>timelog('before inline script');</script>
 
-<h2>Case-2</h2>
+<h2>Inline Script</h2>
 <script>
 <!--
-var src = "legacy2.js";
+var src = "/cgi-bin/sleep_js.cgi?sleep=3&_=" + (new Date()).getTime();
 document.write('<'+'script src="'+src+'"><\/script>');
 // -->
 </script>
 
-<script>console.log('after case2')</script>
+<h2>Body End</h2>
+
+<script>timelog('body end');</script>
 
 </body>
 </html>

@@ -45,7 +45,7 @@ module.exports = (grunt) ->
 
     removelogging:
       options:
-        replaceWith: '// remove debugging code'
+        replaceWith: ''
       files:
         src:  'dist/jquery.forceAsync.debug.js'
         dest: 'dist/jquery.forceAsync.js'

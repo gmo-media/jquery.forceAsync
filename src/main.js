@@ -1,32 +1,38 @@
 (function($){
-    var Count = 0, DynamicLoad = !document.all, Scripts = {}, Config = {
-        'path': './'
-    };
+    var Config = {
+            'path': './'
+        },
+        Count = 0,
+        Scripts = {},
+        DynamicLoad = !document.all;
 
-    // constructor
+    // for legacy IE
+    document.createElement('forceasync');
+
     $.forceAsync = function(target){
         var $target = $(target);
         this.id = 'forceAsync-' + Count++;
-        this.type  = $target.data('forceasync');
+        console.log('forceAsync: find "'+ this.id + '"');
         this.style = $target.parent().attr('style');
-        this.html  = target.outerHTML.replace(/^<noscript/i,    '<script')
-                                     .replace(/<\/noscript>$/i, '<\/script>')
-                                     .replace(/&lt;/g,   '<')
-                                     .replace(/&gt;/g,   '>')
-                                     .replace(/&quot;/g, '"')
-                                     .replace(/&amp;/g,  '&');
+        if (typeof this.style !== 'string') {
+            this.style = '';
+        }
+        this.html = target.outerHTML.replace(/^<forceasync/i,    '<script')
+                                    .replace(/<\/forceasync>$/i, '<\/script>')
+                                    .replace(/&lt;/g,   '<')
+                                    .replace(/&gt;/g,   '>')
+                                    .replace(/&quot;/g, '"')
+                                    .replace(/&amp;/g,  '&');
         this.$iframe = $('<iframe id="' + this.id + '" class="forceAsyncFrame"'
             + ' style="margin:0;border:0;padding:0;width:100%;height:0;"'
-            + ' frameborder="0" marginwidth="0" marginheight="0" scrolling="no"'
+            + ' marginwidth="0" marginheight="0" frameborder="0" scrolling="no"'
             + ' allowtransparency="true" seamless />');
         $target.replaceWith(this.$iframe);
-        console.log('forceAsync: find "'+ this.id + '"');
     };
 
-    // instance method
     $.forceAsync.prototype = {
         'load': function() {
-            if (DynamicLoad && this.type !== 'static') {
+            if (DynamicLoad) {
                 this._loadToDynamicFrame();
             } else {
                 this._loadToStaticFrame();
@@ -34,9 +40,10 @@
 
             var that = this;
             this.$iframe.load(function(){
-                console.log('forceAsync: loaded "' + that.id + '" (height='
-                    + $(that.contentDocument()).height() + ')');
-                that.$iframe.height($(that.contentDocument()).height());
+                var h = $(that.contentDocument()).height();
+                console.log('forceAsync: loaded "' + that.id
+                    + '" (height:' + h + 'px)');
+                that.$iframe.height(h);
             });
         },
         '_loadToDynamicFrame': function() {
@@ -64,11 +71,10 @@
         }
     };
 
-    // static method
     $.extend($.forceAsync, {
         'config': function(options) {
             $.extend(Config, options);
-            if (/\/$/.test(Config.path)) {
+            if (!/\/$/.test(Config.path)) {
                 Config.path += '/';
             }
         },
@@ -77,7 +83,7 @@
         },
         'exec': function() {
             console.log('forceAsync: exec');
-            $('noscript[data-forceAsync]').each(function(){
+            $('forceasync').each(function(){
                 var script = new $.forceAsync(this);
                 script.load();
                 Scripts[script.id] = script;
@@ -85,6 +91,5 @@
         }
     });
 
-    // initialize
     $($.forceAsync.exec);
 })(jQuery);
