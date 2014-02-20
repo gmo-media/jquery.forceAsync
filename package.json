@@ -1,24 +1,29 @@
 {
     "title": "jQuery Force Async",
     "name": "forceAsync",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "Load any script asynchronously.",
-    "keywords": ["script", "async", "defer"],
+    "keywords": ["script", "loader", "async", "defer"],
     "homepage": "https://github.com/gmo-media/jquery.forceAsync",
-    "author": {
-        "organization": "GMO Media,Inc.",
-        "name": "Takayuki Irokawa"
-    },
-    "maintainers": [],
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE"
+            "url": "https://github.com/gmo-media/jquery.forceAsync/raw/master/LICENSE"
+        }
+    ],
+    "author": {
+        "name": "GMO Media,Inc.",
+        "url": "http://www.gmo-media.jp/"
+    },
+    "contributors": [
+        {
+            "name": "Takayuki Irokawa",
+            "url": "https://github.com/irok"
         }
     ],
     "repository": {
         "type": "git",
-        "url": "git@github.com:gmo-media/jquery.forceAsync.git"
+        "url": "https://github.com/gmo-media/jquery.forceAsync.git"
     },
     "bugs": "https://github.com/gmo-media/jquery.forceAsync/issues",
     "demo": "http://iro1.gmo-media.jp/jquery.forceAsync/demo/",

@@ -12,18 +12,18 @@
     $.forceAsync = function(target){
         var $target = $(target);
         this.id = 'forceAsync-' + Count++;
-        console.log('forceAsync: find "'+ this.id + '"');
+        console.log('forceAsync: find "'+this.id+'"');
         this.style = $target.parent().attr('style');
         if (typeof this.style !== 'string') {
             this.style = '';
         }
-        this.html = target.outerHTML.replace(/^<forceasync/i,    '<script')
-                                    .replace(/<\/forceasync>$/i, '<\/script>')
+        this.html = target.outerHTML.replace(/^<forceasync/i,   '<script')
+                                    .replace(/<\/forceasync>$/i,'<\/script>')
                                     .replace(/&lt;/g,   '<')
                                     .replace(/&gt;/g,   '>')
                                     .replace(/&quot;/g, '"')
                                     .replace(/&amp;/g,  '&');
-        this.$iframe = $('<iframe id="' + this.id + '" class="forceAsyncFrame"'
+        this.$iframe = $('<iframe name="'+this.id+'" class="forceAsyncFrame"'
             + ' style="margin:0;border:0;padding:0;width:100%;height:0;"'
             + ' marginwidth="0" marginheight="0" frameborder="0" scrolling="no"'
             + ' allowtransparency="true" seamless />');
@@ -41,26 +41,25 @@
             var that = this;
             this.$iframe.load(function(){
                 var h = $(that.contentDocument()).height();
-                console.log('forceAsync: loaded "' + that.id
-                    + '" (height:' + h + 'px)');
+                console.log('forceAsync: onload "'+that.id+'" ('+h+'px)');
                 that.$iframe.height(h);
             });
         },
         '_loadToDynamicFrame': function() {
-            console.log('forceAsync: load "'+ this.id+ '" to dynamic frame');
+            console.log('forceAsync: load "'+this.id+'" to dynamic frame');
             var doc = this.contentDocument();
             doc.open('text/html');
             try {
                 doc.write('<!DOCTYPE html><html>'
                     + '<body style="margin:0;padding:0;">'
-                    + '<div style="' + this.style + '">' + this.html
+                    + '<div style="'+this.style+'">' + this.html
                     + '</div></body></html>');
             }
             catch (e) {}
             finally { doc.close() }
         },
         '_loadToStaticFrame': function() {
-            console.log('forceAsync: load "'+ this.id + '" to static frame');
+            console.log('forceAsync: load "'+this.id+'" to static frame');
             var frm = this.$iframe.get(0);
             frm.name = this.id;
             frm.src = Config.path + 'forceAsync.html';

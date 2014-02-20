@@ -1,12 +1,12 @@
 /**
- * jQuery Force Async v0.0.5
+ * jQuery Force Async v0.0.6
  * https://github.com/gmo-media/jquery.forceAsync
  *
- * Copyright 2014 GMO Media,Inc.
+ * Copyright 2014 
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-02-19T09:14:57Z
+ * Date: 2014-02-20T06:53:55Z
  */
 (function($){
     var Config = {
@@ -27,13 +27,13 @@
         if (typeof this.style !== 'string') {
             this.style = '';
         }
-        this.html = target.outerHTML.replace(/^<forceasync/i,    '<script')
-                                    .replace(/<\/forceasync>$/i, '<\/script>')
+        this.html = target.outerHTML.replace(/^<forceasync/i,   '<script')
+                                    .replace(/<\/forceasync>$/i,'<\/script>')
                                     .replace(/&lt;/g,   '<')
                                     .replace(/&gt;/g,   '>')
                                     .replace(/&quot;/g, '"')
                                     .replace(/&amp;/g,  '&');
-        this.$iframe = $('<iframe id="' + this.id + '" class="forceAsyncFrame"'
+        this.$iframe = $('<iframe name="'+this.id+'" class="forceAsyncFrame"'
             + ' style="margin:0;border:0;padding:0;width:100%;height:0;"'
             + ' marginwidth="0" marginheight="0" frameborder="0" scrolling="no"'
             + ' allowtransparency="true" seamless />');
@@ -62,7 +62,7 @@
             try {
                 doc.write('<!DOCTYPE html><html>'
                     + '<body style="margin:0;padding:0;">'
-                    + '<div style="' + this.style + '">' + this.html
+                    + '<div style="'+this.style+'">' + this.html
                     + '</div></body></html>');
             }
             catch (e) {}
