@@ -86,7 +86,7 @@ demoのHTMLが動作するか確認した環境です。
   - IE10 - Win7 未検証
   - IE9 - Win7
   - IE8 - Win7 / WinXP
-  - IE7 - Vista 未対応
+  - IE7 - Vista
 - Chrome 32.0
 - Firefox 27.0
 - Opera 19.0
