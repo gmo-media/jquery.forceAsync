@@ -91,9 +91,9 @@ demoのHTMLが動作するか確認した環境です。
 
 ### Mac
 
-- Safari 未検証
-- Chrome 未検証
-- Firefox 未検証
+- Safari 7.0
+- Chrome 31.0
+- Firefox 27.0
 
 ### iOS
 
@@ -101,7 +101,7 @@ demoのHTMLが動作するか確認した環境です。
 
 ### Android
 
-- Browser - 未検証
+- Browser - Android 4.0
 
 ## 分かっている問題
 
