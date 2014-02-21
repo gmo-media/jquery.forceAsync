@@ -16,5 +16,5 @@ else {
 print <<EOH;
 Content-Type: text/javascript; charset=UTF-8
 
-document.writeln('<div style="background:blue;color:white;font-weight:bold;">Sleep $sec</div>');
+document.writeln('<div class="sleep" style="background:blue;color:white;font-weight:bold;">Sleep $sec</div>');
 EOH

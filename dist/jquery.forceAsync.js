@@ -1,27 +1,27 @@
 /**
- * jQuery Force Async v0.0.6
+ * jQuery Force Async v0.0.8
  * https://github.com/gmo-media/jquery.forceAsync
  *
  * Copyright 2014 
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-02-21T02:30:06Z
+ * Date: 2014-02-21T10:33:20Z
  */
 (function($){
-    var Config = {
+    var PluginName = 'forceAsync', $Plugin, Count = 0, Scripts = {},
+        DynamicLoad = !document.all,
+        Config = {
             'path': './'
-        },
-        Count = 0,
-        Scripts = {},
-        DynamicLoad = !document.all;
+        };
 
     // for legacy IE
     document.createElement('forceasync');
 
-    $.forceAsync = function(target){
+    $Plugin = $[PluginName] = function(target){
         var $target = $(target);
-        this.id = 'forceAsync-' + Count++;
+        Count++;
+        this.id = target.id !== '' ? target.id : PluginName+'-'+Count;
         
         this.style = $target.parent().attr('style');
         if (typeof this.style !== 'string') {
@@ -40,24 +40,24 @@
         $target.replaceWith(this.$iframe);
     };
 
-    $.forceAsync.prototype = {
+    $Plugin.prototype = {
         'load': function() {
             if (DynamicLoad) {
-                this._loadToDynamicFrame();
+                this._dynamicLoad();
             } else {
-                this._loadToStaticFrame();
+                this._staticLoad();
             }
 
             var that = this;
             this.$iframe.load(function(){
-                var h = $(that.contentDocument()).height();
+                var h = $(that.document()).height();
                 
                 that.$iframe.height(h);
             });
         },
-        '_loadToDynamicFrame': function() {
+        '_dynamicLoad': function() {
             
-            var doc = this.contentDocument();
+            var doc = this.document();
             doc.open('text/html');
             try {
                 doc.write('<!DOCTYPE html><html>'
@@ -68,19 +68,19 @@
             catch (e) {}
             finally { doc.close() }
         },
-        '_loadToStaticFrame': function() {
+        '_staticLoad': function() {
             
             var frm = this.$iframe.get(0);
             frm.name = this.id;
-            frm.src = Config.path + 'forceAsync.html';
+            frm.src = Config.path + PluginName + '.html';
         },
-        'contentDocument': function() {
+        'document': function() {
             var frm = this.$iframe.get(0);
             return frm.contentDocument || frm.contentWindow.document;
         }
     };
 
-    $.extend($.forceAsync, {
+    $.extend($Plugin, {
         'config': function(options) {
             $.extend(Config, options);
             if (!/\/$/.test(Config.path)) {
@@ -90,16 +90,19 @@
         'getScript': function(id) {
             return Scripts[id];
         },
-        'exec': function() {
+        'exec': function(callback) {
             
             $('forceasync').each(function(){
-                var script = new $.forceAsync(this);
+                var script = new $[PluginName](this);
+                if (typeof callback === 'function') {
+                    callback(script);
+                }
                 script.load();
                 Scripts[script.id] = script;
             });
         }
     });
 
-    $($.forceAsync.exec);
+    $($Plugin.exec);
     
 })(jQuery);

@@ -1,19 +1,19 @@
 (function($){
-    var Config = {
+    var PluginName = 'forceAsync', $Plugin, Count = 0, Scripts = {},
+        DynamicLoad = !document.all,
+        Config = {
             'path': './'
-        },
-        Count = 0,
-        Scripts = {},
-        DynamicLoad = !document.all;
+        };
 
     // for legacy IE
     document.createElement('forceasync');
 
-    $.forceAsync = function(target){
+    $Plugin = $[PluginName] = function(target){
         var $target = $(target);
-        this.id = 'forceAsync-' + Count++;
-        console.log('forceAsync: find "'+this.id+'"'
-            + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
+        Count++;
+        this.id = target.id !== '' ? target.id : PluginName+'-'+Count;
+        console.log(PluginName+': find "'+this.id+'"'
+            + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
         this.style = $target.parent().attr('style');
         if (typeof this.style !== 'string') {
             this.style = '';
@@ -31,26 +31,26 @@
         $target.replaceWith(this.$iframe);
     };
 
-    $.forceAsync.prototype = {
+    $Plugin.prototype = {
         'load': function() {
             if (DynamicLoad) {
-                this._loadToDynamicFrame();
+                this._dynamicLoad();
             } else {
-                this._loadToStaticFrame();
+                this._staticLoad();
             }
 
             var that = this;
             this.$iframe.load(function(){
-                var h = $(that.contentDocument()).height();
-                console.log('forceAsync: onload "'+that.id+'" ('+h+'px)'
-                    + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
+                var h = $(that.document()).height();
+                console.log(PluginName+': onload "'+that.id+'" ('+h+'px)'
+                    + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
                 that.$iframe.height(h);
             });
         },
-        '_loadToDynamicFrame': function() {
-            console.log('forceAsync: load "'+this.id+'" to dynamic frame'
-                + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
-            var doc = this.contentDocument();
+        '_dynamicLoad': function() {
+            console.log(PluginName+': load "'+this.id+'" to dynamic frame'
+                + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
+            var doc = this.document();
             doc.open('text/html');
             try {
                 doc.write('<!DOCTYPE html><html>'
@@ -61,20 +61,20 @@
             catch (e) {}
             finally { doc.close() }
         },
-        '_loadToStaticFrame': function() {
-            console.log('forceAsync: load "'+this.id+'" to static frame'
-                + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
+        '_staticLoad': function() {
+            console.log(PluginName+': load "'+this.id+'" to static frame'
+                + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
             var frm = this.$iframe.get(0);
             frm.name = this.id;
-            frm.src = Config.path + 'forceAsync.html';
+            frm.src = Config.path + PluginName + '.html';
         },
-        'contentDocument': function() {
+        'document': function() {
             var frm = this.$iframe.get(0);
             return frm.contentDocument || frm.contentWindow.document;
         }
     };
 
-    $.extend($.forceAsync, {
+    $.extend($Plugin, {
         'config': function(options) {
             $.extend(Config, options);
             if (!/\/$/.test(Config.path)) {
@@ -84,17 +84,20 @@
         'getScript': function(id) {
             return Scripts[id];
         },
-        'exec': function() {
-            console.log('forceAsync: exec'
-                + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
+        'exec': function(callback) {
+            console.log(PluginName+': exec'
+                + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
             $('forceasync').each(function(){
-                var script = new $.forceAsync(this);
+                var script = new $[PluginName](this);
+                if (typeof callback === 'function') {
+                    callback(script);
+                }
                 script.load();
                 Scripts[script.id] = script;
             });
         }
     });
 
-    $($.forceAsync.exec);
-    console.log(($.forceAsync.t0 = Date.now()) && 'forceAsync: ready - 0ms');
+    $($Plugin.exec);
+    console.log(($Plugin.t0 = Date.now()) && PluginName+': ready - 0ms');
 })(jQuery);

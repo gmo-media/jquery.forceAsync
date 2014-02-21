@@ -81,8 +81,7 @@ demoのHTMLが動作するか確認した環境です。
 
 - Internet Explorer
   - IE11 - Win8.1 / Win7
-  - IE10 - Win8
-  - IE10 - Win7 未検証
+  - IE10 - Win8 / Win7
   - IE9 - Win7
   - IE8 - Win7 / WinXP
   - IE7 - Vista
