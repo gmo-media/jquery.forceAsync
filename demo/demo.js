@@ -1,11 +1,16 @@
+var t0;
 function timelog(label) {
-    console.log(label + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
+    if ($ && $.forceAsync && $.forceAsync.t0) {
+        t0 = $.forceAsync.t0;
+    }
+    console.log(label + ' - ' + (Date.now() - t0) + 'ms');
 };
 
 // Date.now
 if (typeof Date.now !== 'function') {
     Date.now = function(){ return (new Date()).getTime() };
 }
+t0 = Date.now();
 
 // console.log
 if (!window.console) {
