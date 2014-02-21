@@ -6,7 +6,7 @@
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-02-20T06:53:55Z
+ * Date: 2014-02-21T02:30:06Z
  */
 (function($){
     var Config = {
@@ -101,4 +101,5 @@
     });
 
     $($.forceAsync.exec);
+    
 })(jQuery);

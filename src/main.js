@@ -12,7 +12,8 @@
     $.forceAsync = function(target){
         var $target = $(target);
         this.id = 'forceAsync-' + Count++;
-        console.log('forceAsync: find "'+this.id+'"');
+        console.log('forceAsync: find "'+this.id+'"'
+            + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
         this.style = $target.parent().attr('style');
         if (typeof this.style !== 'string') {
             this.style = '';
@@ -41,12 +42,14 @@
             var that = this;
             this.$iframe.load(function(){
                 var h = $(that.contentDocument()).height();
-                console.log('forceAsync: onload "'+that.id+'" ('+h+'px)');
+                console.log('forceAsync: onload "'+that.id+'" ('+h+'px)'
+                    + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
                 that.$iframe.height(h);
             });
         },
         '_loadToDynamicFrame': function() {
-            console.log('forceAsync: load "'+this.id+'" to dynamic frame');
+            console.log('forceAsync: load "'+this.id+'" to dynamic frame'
+                + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
             var doc = this.contentDocument();
             doc.open('text/html');
             try {
@@ -59,7 +62,8 @@
             finally { doc.close() }
         },
         '_loadToStaticFrame': function() {
-            console.log('forceAsync: load "'+this.id+'" to static frame');
+            console.log('forceAsync: load "'+this.id+'" to static frame'
+                + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
             var frm = this.$iframe.get(0);
             frm.name = this.id;
             frm.src = Config.path + 'forceAsync.html';
@@ -81,7 +85,8 @@
             return Scripts[id];
         },
         'exec': function() {
-            console.log('forceAsync: exec');
+            console.log('forceAsync: exec'
+                + ' - ' + (Date.now() - $.forceAsync.t0) + 'ms');
             $('forceasync').each(function(){
                 var script = new $.forceAsync(this);
                 script.load();
@@ -91,4 +96,5 @@
     });
 
     $($.forceAsync.exec);
+    console.log(($.forceAsync.t0 = Date.now()) && 'forceAsync: ready - 0ms');
 })(jQuery);
