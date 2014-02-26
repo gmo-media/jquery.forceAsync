@@ -21,7 +21,7 @@
         var script = w.parent.jQuery.forceAsync.getScript(w.name);
         if (script) {
             try {
-                d.write(script.html);
+                d.write(script.getHtml());
             }
             catch (e) {}
 

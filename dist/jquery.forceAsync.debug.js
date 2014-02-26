@@ -6,7 +6,7 @@
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-02-26T08:01:16Z
+ * Date: 2014-02-26T11:01:51Z
  */
 (function($){
     var PluginName = 'forceAsync', $Plugin, Count = 0, Scripts = {},
@@ -20,8 +20,7 @@
 
     $Plugin = $[PluginName] = function(target){
         var $target = $(target);
-        Count++;
-        this.id = target.id !== '' ? target.id : PluginName+'-'+Count;
+        this.id = target.id !== '' ? target.id : PluginName+'-'+Count++;
         console.log(PluginName+': find "'+this.id+'"'
             + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
         this.style = $target.parent().attr('style');
@@ -38,6 +37,7 @@
             + ' style="margin:0;border:0;padding:0;width:100%;height:0;"'
             + ' marginwidth="0" marginheight="0" frameborder="0" scrolling="no"'
             + ' allowtransparency="true" seamless />');
+        this.cb = {};
         $target.replaceWith(this.$iframe);
     };
 
@@ -52,6 +52,9 @@
             var that = this;
             this.$iframe.load(function(){
                 setTimeout(function(){
+                    if (that.cb.load) {
+                        that.cb.load.call(that);
+                    }
                     var h = $(that.document()).height();
                     console.log(PluginName+': onload "'+that.id+'" ('+h+'px)'
                         + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
@@ -67,7 +70,7 @@
             try {
                 doc.write('<!DOCTYPE html><html>'
                     + '<body style="margin:0;padding:0;">'
-                    + '<div style="'+this.style+'">' + this.html
+                    + '<div style="'+this.style+'">' + this.getHtml()
                     + '</div></body></html>');
             }
             catch (e) {}
@@ -83,6 +86,9 @@
         'document': function() {
             var frm = this.$iframe.get(0);
             return frm.contentDocument || frm.contentWindow.document;
+        },
+        'getHtml': function() {
+            return this.cb.html ? this.cb.html(this.html) : this.html;
         }
     };
 
@@ -96,16 +102,26 @@
         'getScript': function(id) {
             return Scripts[id];
         },
-        'exec': function(callback) {
+        'exec': function(arg) {
             console.log(PluginName+': exec'
                 + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
+            if (typeof arg === 'string') {
+                var p = arg, q = arguments[1];
+                if (typeof q !== 'string') {
+                    q = '';
+                }
+                arg = {
+                    'html': function(html) { return p + html + q }
+                };
+            }
+            else if (typeof arg !== 'object') {
+                arg = {};
+            }
             $('forceasync').each(function(){
                 var script = new $[PluginName](this);
-                if (typeof callback === 'function') {
-                    callback(script);
-                }
-                script.load();
+                $.extend(script.cb, arg);
                 Scripts[script.id] = script;
+                script.load();
             });
         }
     });
