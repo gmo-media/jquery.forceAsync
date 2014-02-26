@@ -6,7 +6,7 @@
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-02-26T11:01:51Z
+ * Date: 2014-02-26T14:38:08Z
  */
 (function($){
     var PluginName = 'forceAsync', $Plugin, Count = 0, Scripts = {},
