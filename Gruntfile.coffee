@@ -14,7 +14,7 @@ module.exports = (grunt) ->
                    * <%= pkg.title %> v<%= pkg.version %>
                    * <%= pkg.homepage %>
                    *
-                   * Copyright 2014 <%= pkg.author.organization %>
+                   * Copyright 2014 <%= pkg.author.name %>
                    * Released under the MIT license
                    * <%= pkg.homepage %>/blob/master/LICENSE
                    *
@@ -56,7 +56,7 @@ module.exports = (grunt) ->
           banner: '''
                   /**
                    * <%= pkg.title %> v<%= pkg.version %>
-                   * (c) 2014 <%= pkg.author.organization %>
+                   * (c) 2014 <%= pkg.author.name %>
                    * MIT license
                    */
                   '''
