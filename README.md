@@ -73,7 +73,7 @@
 ### スクリプトの遅延読み込み
 
 window.onloadが発行される前に新たなリソース読み込みを始めてしまうと、そのリソースが読み込み終わるまでwindow.onloadは遅延されます。
-もし、スクリプトの読み込みを十分に遅らせたい場合は`config`メソッドで`onload:true`を指定することで、読み込みをwindow.onloadで始めるようにできます。
+もし、できるだけ早くwindow.onloadを発火させたい場合は、`config`メソッドで`onload:true`を指定することで読み込みをwindow.onloadで始めるようにできます。
 
 ```html
 <script>$.forceAsync.config({path:'../jquery/forceAsync/', onload:true});</script>
