@@ -54,8 +54,10 @@
             }
             DynamicLoad ? that._loadD() : that._loadS();
             that.$f.load(function(){
-                that.$f.show();
-                setTimeout(function(){ that._onload() }, 4);
+                setTimeout(function(){
+                    that.$f.show();
+                    that._onload();
+                }, 4);
             });
         },
         '_onload': function() {
