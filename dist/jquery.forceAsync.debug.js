@@ -1,12 +1,12 @@
 /**
- * jQuery Force Async v0.0.10
+ * jQuery Force Async v0.0.11
  * https://github.com/gmo-media/jquery.forceAsync
  *
  * Copyright 2014 GMO Media,Inc.
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-03-13T05:57:53Z
+ * Date: 2014-03-13T06:01:39Z
  */
 (function($){
     var Pkg = 'forceAsync', FAsync, Count = 0, Scripts = {},
