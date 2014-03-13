@@ -1,16 +1,15 @@
 /**
- * jQuery Force Async v0.0.11
+ * jQuery Force Async v0.0.12
  * https://github.com/gmo-media/jquery.forceAsync
  *
  * Copyright 2014 GMO Media,Inc.
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-03-13T06:01:39Z
+ * Date: 2014-03-13T12:12:31Z
  */
 (function($){
-    var Pkg = 'forceAsync', FAsync, Count = 0, Scripts = {},
-        DynamicLoad = !document.all,
+    var FAsync, Count = 0, Scripts = {}, DynamicLoad = !document.all,
         Config = {
             'path': './',
             'delay': false
@@ -19,9 +18,9 @@
     // for legacy IE
     document.createElement('forceasync');
 
-    $[Pkg] = FAsync = function(target){
+    $.forceAsync = FAsync = function(target){
         this.$t = $(target);
-        this.id = target.id !== '' ? target.id : Pkg+'-'+Count++;
+        this.id = target.id || 'forceAsync-'+Count++;
         
         this.style = this.$t.parent().attr('style');
         if (typeof this.style !== 'string') {
@@ -82,8 +81,7 @@
                 that.$t = that.$f.height(h);
             }
             if (that.refresh) {
-                setTimeout(function(){ that.load() },
-                    h === 0 ? 1000 : that.refresh);
+                setTimeout(function(){ that.load() }, that.refresh);
             }
         },
         '_loadD': function() {
@@ -110,7 +108,7 @@
             
             var frm = this.$f.get(0);
             frm.name = this.id;
-            frm.src = Config.path + Pkg + '.html';
+            frm.src = Config.path + 'forceAsync.html';
         },
         'doc': function() {
             var frm = this.$f.get(0), cw = 'contentWindow';
