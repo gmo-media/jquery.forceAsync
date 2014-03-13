@@ -10,7 +10,7 @@
     "latedef":           true,      // 定義前変数の使用禁止
     "maxparams":            3,      // 関数の引数の最大数を指定
     "maxdepth":             3,      // 入れ子の深さの最大値を指定
-    "maxstatements":       15,      // 関数内の文の最大数を指定
+    "maxstatements":       10,      // 関数内の文の最大数を指定
     "maxcomplexity":        5,      // 循環的複雑度の最大値を指定
     "maxlen":              80,      // 一行の最大の長さを指定
     "newcap":            true,      // コンストラクタ関数の先頭大文字強制
@@ -32,7 +32,7 @@
     "eqnull":           false,      // == nullについての警告停止
     "expr":              true,      // 式の中での代入もしくは関数呼出しについての警告停止
     "funcscope":        false,      // 外側からアクセス可能な構造内部での変数宣言についての警告停止
-    "evil":             false,      // evalの使用についての警告停止
+    "evil":              true,      // evalの使用についての警告停止
     "gcl":              false,      // Google Closure Compiler互換
     "globalstrict":     false,      // グローバルでのstrict mode使用についての警告停止
     "iterator":         false,      // __iterator__プロパティについての警告停止

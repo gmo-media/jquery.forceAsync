@@ -1,35 +1,43 @@
 (function($){
-    var PluginName = 'forceAsync', $Plugin, Count = 0, Scripts = {},
+    var Pkg = 'forceAsync', FAsync, Count = 0, Scripts = {},
         DynamicLoad = !document.all,
         Config = {
             'path': './',
-            'onload': false
+            'delay': false
         };
 
     // for legacy IE
     document.createElement('forceasync');
 
-    $Plugin = $[PluginName] = function(target){
+    $[Pkg] = FAsync = function(target){
         this.$t = $(target);
-        this.id = target.id !== '' ? target.id : PluginName+'-'+Count++;
-        console.log(PluginName+': find "'+this.id+'"'
-            + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
+        this.id = target.id !== '' ? target.id : Pkg+'-'+Count++;
+        console.log(Pkg+': find "'+this.id+'"'
+            + ' - ' + (Date.now() - FAsync.t0) + 'ms');
         this.style = this.$t.parent().attr('style');
         if (typeof this.style !== 'string') {
             this.style = '';
         }
-        this.html = target.outerHTML.replace(/^<forceasync/i,   '<script')
-                                    .replace(/<\/forceasync>$/i,'<\/script>')
-                                    .replace(/&lt;/g,   '<')
-                                    .replace(/&gt;/g,   '>')
-                                    .replace(/&quot;/g, '"')
-                                    .replace(/&amp;/g,  '&');
+        this.html = (target.outerHTML || genOuterHTML(target))
+                  .replace(/^<forceasync/i,   '<script')
+                  .replace(/<\/forceasync>$/i,'<\/script>')
+                  .replace(/&lt;/g,   '<')
+                  .replace(/&gt;/g,   '>')
+                  .replace(/&quot;/g, '"')
+                  .replace(/&amp;/g,  '&');
         this.refresh = (this.$t.data('refresh') || 0) * 1000;
         this.cb = {};
     };
+    function genOuterHTML(node) {
+        return '<script'
+            + $.map(node.attributes, function(a){
+                  return a.specified ? ' '+a.name+'="'+a.value+'"' : '';
+              }).join('')
+            + '>' + node.innerHTML + '<\/script>';
+    }
 
-    $Plugin.prototype = {
-        '_createFrame': function() {
+    FAsync.prototype = {
+        '_frame': function() {
             return $('<iframe name="'+this.id+'" class="forceAsyncFrame"'
                 + ' style="margin:0;border:0;padding:0;width:100%;height:0;"'
                 + ' marginwidth="0" marginheight="0" frameborder="0"'
@@ -37,72 +45,75 @@
         },
         'load': function() {
             var that = this;
-            (this.$f = this._createFrame()).hide();
-            if (this.reload) {
-                this.$t.before(this.$f);
+            (that.$f = that._frame()).hide();
+            if (that.reload) {
+                that.$t.before(that.$f);
             } else {
-                this.$t.replaceWith(this.$f);
-                this.reload = true;
+                that.$t.replaceWith(that.$f);
+                that.reload = true;
             }
-            DynamicLoad ? this._dynamicLoad() : this._staticLoad();
-            this.$f.load(function(){
+            DynamicLoad ? that._loadD() : that._loadS();
+            that.$f.load(function(){
+                that.$f.show();
                 setTimeout(function(){ that._onload() }, 4);
             });
         },
         '_onload': function() {
-            this.$f.show();
-            if (this.cb.load) {
-                this.cb.load.call(this);
+            var that = this, h;
+            if (that.cb.load) {
+                that.cb.load.call(that);
             }
 
-            var that = this, h = $(this.document()).height();
-            console.log(PluginName+': onload "'+this.id+'" (' + h + 'px)'
-                + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
+            h = $(that.doc()).height();
+            console.log(Pkg+': onload "'+this.id+'" (' + h + 'px)'
+                + ' - ' + (Date.now() - FAsync.t0) + 'ms');
             if (h > 0) {
-                this.$t.remove();
-                this.$t = this.$f.height(h);
+                that.$t.remove();
+                that.$t = that.$f.height(h);
             }
-            if (this.refresh) {
+            if (that.refresh) {
                 setTimeout(function(){ that.load() },
-                    h === 0 ? 1000 : this.refresh);
+                    h === 0 ? 1000 : that.refresh);
             }
         },
-        '_dynamicLoad': function() {
-            console.log(PluginName+': load "'+this.id+'" to dynamic frame'
-                + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
-            var doc = this.document();
+        '_loadD': function() {
+            console.log(Pkg+': load "'+this.id+'" to dynamic frame'
+                + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+            var doc = this.doc();
             if (!doc) {
-                console.log(PluginName+': _dynamicLoad failed "'+this.id+'"');
-                this._staticLoad();
+                console.log(Pkg+': Dynamic load failed "'+this.id+'"');
+                this._loadS();
                 return;
             }
             doc.open('text/html');
             try {
                 doc.write('<!DOCTYPE html><html>'
+                    + '<head><meta charset=UTF-8"></head>'
                     + '<body style="margin:0;padding:0;">'
+                    + '<script>document.charset="UTF-8";</script>'
                     + '<div style="'+this.style+'">' + this.getHtml()
                     + '</div></body></html>');
             }
             catch (e) {}
             finally { doc.close() }
         },
-        '_staticLoad': function() {
-            console.log(PluginName+': load "'+this.id+'" to static frame'
-                + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
+        '_loadS': function() {
+            console.log(Pkg+': load "'+this.id+'" to static frame'
+                + ' - ' + (Date.now() - FAsync.t0) + 'ms');
             var frm = this.$f.get(0);
             frm.name = this.id;
-            frm.src = Config.path + PluginName + '.html';
+            frm.src = Config.path + Pkg + '.html';
         },
-        'document': function() {
-            var frm = this.$f.get(0), w = 'contentWindow';
-            return frm.contentDocument || frm[w] && frm[w].document;
+        'doc': function() {
+            var frm = this.$f.get(0), cw = 'contentWindow';
+            return frm.contentDocument || frm[cw] && frm[cw].document;
         },
         'getHtml': function() {
             return this.cb.html ? this.cb.html(this.html) : this.html;
         }
     };
 
-    $.extend($Plugin, {
+    $.extend(FAsync, {
         'config': function(options) {
             $.extend(Config, options);
             if (!/\/$/.test(Config.path)) {
@@ -113,8 +124,8 @@
             return Scripts[id];
         },
         'exec': function(arg) {
-            console.log(PluginName+': exec'
-                + ' - ' + (Date.now() - $Plugin.t0) + 'ms');
+            console.log(Pkg+': exec'
+                + ' - ' + (Date.now() - FAsync.t0) + 'ms');
             if (typeof arg === 'string') {
                 var p = arg, q = arguments[1];
                 if (typeof q !== 'string') {
@@ -128,7 +139,7 @@
                 arg = {};
             }
             $('forceasync').each(function(){
-                var script = new $[PluginName](this);
+                var script = new FAsync(this);
                 $.extend(script.cb, arg);
                 (Scripts[script.id] = script).load();
             });
@@ -136,11 +147,11 @@
     });
 
     $(function(){
-        if (Config.onload) {
-            $(window).load($Plugin.exec);
+        if (Config.delay) {
+            $(window).load(FAsync.exec);
         } else {
-            $Plugin.exec();
+            FAsync.exec();
         }
     });
-    console.log(($Plugin.t0 = Date.now()) && PluginName+': ready - 0ms');
+    console.log((FAsync.t0 = Date.now()) && Pkg+': ready - 0ms');
 })(jQuery);

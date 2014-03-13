@@ -27,30 +27,27 @@ var FluctApiClient = function(linkTarget){ this.linkTarget = linkTarget; this.fd
 
 <h2>MicroAd</h2>
 <div style="text-align:center;">
-<!--/* adfunnel.microad.jp Javascript Tag v */-->
 <forceasync type='text/javascript' id="microad"><!--//<![CDATA[
-   document.MAX_ct0 ='INSERT_CLICKURL_HERE';
-
+   document.MAX_ct0 ='INSERT_CLICKURL_HERE';   
 if (location.protocol=='https:') {
 } else {
    var m3_u = 'http://adf.send.microad.jp/ajs.php';
    var m3_r = Math.floor(Math.random()*99999999999);
    if (!document.MAX_used) document.MAX_used = ',';
    document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
-   document.write ("?zoneid=2632");
+   document.write ("?zoneid=15711");
    document.write ('&amp;snr=1&amp;cb=' + m3_r);
    if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
    document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
-   document.write ("&amp;loc=" + escape(window.location));
-   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
-   if (document.context) document.write ("&context=" + escape(document.context));
+   document.write ("&amp;loc=" + encodeURIComponent('http://www.rankingshare.jp/'));
    if ((typeof(document.MAX_ct0) != 'undefined') && (document.MAX_ct0.substring(0,4) == 'http')) {
-       document.write ("&amp;ct0=" + escape(document.MAX_ct0));
+       document.write ("&amp;ct0=" + encodeURIComponent(document.MAX_ct0));
    }
    if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
    document.write ("'><\/scr"+"ipt>");
 }
-//]]>--></forceasync><noscript><a href='http://adf.send.microad.jp/ck.php?n=ac07b7d5&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://adf.send.microad.jp/avw.php?zoneid=2632&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ac07b7d5&amp;ct0=INSERT_CLICKURL_HERE&amp;snr=1' border='0' alt='' /></a></noscript>
+//]]>--></forceasync>
+<noscript><a href='http://adf.send.microad.jp/ck.php?n=a3ff3a8e&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://adf.send.microad.jp/avw.php?zoneid=15711&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a3ff3a8e&amp;ct0=INSERT_CLICKURL_HERE&amp;snr=1' border='0' alt='' /></a></noscript>
 </div>
 
 <h2>Heavy Script (<span style="color:red;">Blocking</span>: sleep=2)</h2>
@@ -63,7 +60,7 @@ document.write('<'+'script src="'+src+'"><\/script>');
 
 <h2>Geinee</h2>
 <div style="text-align:center;">
-<forceasync type='text/javascript' id="geinee"><!--//<![CDATA[
+<forceasync type='text/javascript' id="geinee"><!--
    var m3_u = (location.protocol=='https:'?'https://d.href.asia/nw/d/ajs.php':'http://d.href.asia/nw/d/ajs.php');
    var m3_r = Math.floor(Math.random()*99999999999);
    if (!document.MAX_used) document.MAX_used = ',';
@@ -73,11 +70,9 @@ document.write('<'+'script src="'+src+'"><\/script>');
    if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
    document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
    document.write ("&amp;loc=" + escape(window.location));
-   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
-   if (document.context) document.write ("&context=" + escape(document.context));
    if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
    document.write ("'><\/scr"+"ipt>");
-//]]>--></forceasync><noscript><a href='http://d.href.asia/nw/d/ck.php?n=aceb914d&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://d.href.asia/nw/d/avw.php?zoneid=6643&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=aceb914d' border='0' alt='' /></a></noscript>
+--></forceasync><noscript><a href='http://d.href.asia/nw/d/ck.php?n=aceb914d&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://d.href.asia/nw/d/avw.php?zoneid=6643&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=aceb914d' border='0' alt='' /></a></noscript>
 </div>
 
 </body>

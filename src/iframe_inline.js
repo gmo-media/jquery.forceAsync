@@ -1,11 +1,12 @@
-(function(w, d){
+document.charset = 'UTF-8';
+(function(window, document){
     function camelize(_, c) {
         return c.toUpperCase();
     }
 
     function setStyle(style) {
         var styles = style.split(/; */),
-            container = d.getElementById('c'),
+            container = document.getElementById('c'),
             i, len, kv;
         for (i = 0, len = styles.length; i < len; i++) {
             kv = styles[i].split(/: */);
@@ -17,11 +18,11 @@
         }
     }
 
-    if (w.parent && w.parent.jQuery && w.parent.jQuery.forceAsync) {
-        var script = w.parent.jQuery.forceAsync.getScript(w.name);
+    if (window.parent.jQuery && window.parent.jQuery.forceAsync) {
+        var script = window.parent.jQuery.forceAsync.getScript(window.name);
         if (script) {
             try {
-                d.write(script.getHtml());
+                document.writeln(script.getHtml());
             }
             catch (e) {}
 
