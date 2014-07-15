@@ -60,10 +60,10 @@
 ### 他のスクリプトに依存しているもの
 
 ```html
-<script src="library.js"></script>
+<script src="mylib.js"></script>
 <script>
 <!--
-/* library.jsを利用したコード */
+/* mylib.jsを利用したコード */
 // -->
 </script>
 ```
@@ -71,10 +71,10 @@
 このような依存関係がある場合は、タグを直す以外に data-* 属性を設定します。
 
 ```html
-<forceasync data-name="mylib" src="library.js"></forceasync>
+<forceasync data-name="mylib" src="mylib.js"></forceasync>
 <forceasync data-require="mylib">
 <!--
-/* library.jsを利用したコード */
+/* mylib.jsを利用したコード */
 // -->
 </forceasync>
 ```
