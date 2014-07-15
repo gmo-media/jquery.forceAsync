@@ -1,15 +1,15 @@
 /**
- * jQuery Force Async v0.0.12
+ * jQuery Force Async v0.1.0
  * https://github.com/gmo-media/jquery.forceAsync
  *
  * Copyright 2014 GMO Media,Inc.
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-03-13T12:12:31Z
+ * Date: 2014-07-15T06:46:02Z
  */
 (function($){
-    var FAsync, Count = 0, Scripts = {}, DynamicLoad = !document.all,
+    var FAsync, Count = 0, Scripts = {}, Libs = {}, DynamicLoad = !document.all,
         Config = {
             'path': './',
             'delay': false
@@ -34,6 +34,8 @@
                   .replace(/&quot;/g, '"')
                   .replace(/&amp;/g,  '&');
         this.refresh = (this.$t.data('refresh') || 0) * 1000;
+        this.require =  this.$t.data('require');
+        this.libname =  this.$t.data('name');
         this.cb = {};
     };
     function genOuterHTML(node) {
@@ -110,12 +112,22 @@
             frm.name = this.id;
             frm.src = Config.path + 'forceAsync.html';
         },
+        'remove': function() {
+            this.$t.remove();
+        },
         'doc': function() {
             var frm = this.$f.get(0), cw = 'contentWindow';
             return frm.contentDocument || frm[cw] && frm[cw].document;
         },
         'getHtml': function() {
-            return this.cb.html ? this.cb.html(this.html) : this.html;
+            var html = this.html;
+            if (this.cb.html) {
+                html = this.cb.html(html);
+            }
+            if (this.require && Libs[this.require]) {
+                html = Libs[this.require].html + html;
+            }
+            return html;
         }
     };
 
@@ -145,8 +157,12 @@
             }
             $('forceasync').each(function(){
                 var script = new FAsync(this);
-                $.extend(script.cb, arg);
-                (Scripts[script.id] = script).load();
+                if (script.libname) {
+                    (Libs[script.libname] = script).remove();
+                } else {
+                    $.extend(script.cb, arg);
+                    (Scripts[script.id] = script).load();
+                }
             });
         }
     });

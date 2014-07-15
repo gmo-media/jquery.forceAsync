@@ -57,6 +57,52 @@
 </forceasync>
 ```
 
+### 他のスクリプトに依存しているもの
+
+```html
+<script src="library.js"></script>
+<script>
+<!--
+/* library.jsを利用したコード */
+// -->
+</script>
+```
+
+このような依存関係がある場合は、タグを直す以外に data-* 属性を設定します。
+
+```html
+<forceasync data-name="mylib" src="library.js"></forceasync>
+<forceasync data-require="mylib">
+<!--
+/* library.jsを利用したコード */
+// -->
+</forceasync>
+```
+
+`data-name`と`data-require`には同じ値を指定します。値は他の設定と重複しなければ何でも構いません。
+
+元のスクリプトが以下のような形になっている場合でも
+
+```html
+<script>
+<!--
+/* exec.jsのための設定 */
+// -->
+</script>
+<script src="exec.js"></script>
+```
+
+依存される側に`data-name`、依存する側に`data-require`を設定します。
+
+```html
+<forceasync data-name="config">
+<!--
+/* exec.jsのための設定 */
+// -->
+</forceasync>
+<forceasync data-require="config" src="exec.js"></forceasync>
+```
+
 ### スクリプトの早期読み込み
 
 スクリプトの読み込みが開始されるのは、forceasyncタグが現れたタイミングではなく`$(document).ready()`です。
