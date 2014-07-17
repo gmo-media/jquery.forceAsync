@@ -25,7 +25,13 @@ module.exports = (grunt) ->
           'dist/jquery.forceAsync.debug.js': ['src/main.js']
       iframe:
         files:
-          'tmp/forceAsync.html': ['src/iframe_part_A.html', 'tmp/iframe_inline.min.js', 'src/iframe_part_B.html']
+          'tmp/forceAsync.html': [
+            'src/iframe_part_A.html',
+            'tmp/iframe_head.min.js',
+            'src/iframe_part_A2.html',
+            'tmp/iframe_main.min.js',
+            'src/iframe_part_C.html'
+          ]
 
     htmlmin:
       iframe:
@@ -40,7 +46,8 @@ module.exports = (grunt) ->
         jshintrc: '.jshintrc'
       files: [
         'src/main.js'
-        'src/iframe_inline.js'
+        'src/iframe_main.js'
+        'src/iframe_head.js'
       ]
 
     removelogging:
@@ -64,8 +71,10 @@ module.exports = (grunt) ->
         files:
           'dist/jquery.forceAsync.min.js': ['dist/jquery.forceAsync.js']
       iframe:
-        files:
-          'tmp/iframe_inline.min.js': ['src/iframe_inline.js']
+        files: {
+          'tmp/iframe_main.min.js': ['src/iframe_main.js'],
+          'tmp/iframe_head.min.js': ['src/iframe_head.js']
+        }
 
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-concat'

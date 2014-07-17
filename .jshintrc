@@ -10,9 +10,9 @@
     "latedef":           true,      // 定義前変数の使用禁止
     "maxparams":            3,      // 関数の引数の最大数を指定
     "maxdepth":             3,      // 入れ子の深さの最大値を指定
-    "maxstatements":       15,      // 関数内の文の最大数を指定
+    "maxstatements":       20,      // 関数内の文の最大数を指定
     "maxcomplexity":        5,      // 循環的複雑度の最大値を指定
-    "maxlen":              80,      // 一行の最大の長さを指定
+    "maxlen":             160,      // 一行の最大の長さを指定
     "newcap":            true,      // コンストラクタ関数の先頭大文字強制
     "noarg":             true,      // arguments.callerおよびarguments.calleeの使用禁止
     "noempty":           true,      // 空ブロックの警告
@@ -22,8 +22,8 @@
     "quotmark":      "single",      // クオテーション統一
     "strict":           false,      // ECMAScript5 の strict mode 強制
     "trailing":          true,      // 行末の余分な空白エラー
-    "undef":             true,      // 宣言していない変数の使用禁止
-    "unused":            true,      // 使用していない変数について警告する
+    "undef":            false,      // 宣言していない変数の使用禁止
+    "unused":           false,      // 使用していない変数について警告する
 
     // 緩和オプション
     "asi":               true,      // セミコロンの付け忘れについての警告停止
@@ -57,7 +57,7 @@
     "couch":            false,      // CouchDB指定
     "devel":             true,      // consoleやalertなどのデバッグ用ログの使用を指定
     "dojo":             false,      // Dojo Toolkit指定
-    "jquery":            true,      // jQueryライブラリ使用指定
+    "jquery":           false,      // jQueryライブラリ使用指定
     "mootools":         false,      // Mootoolsフレームワーク使用指定
     "node":             false,      // Node環境での実行指定
     "nonstandard":      false,      // 非標準指定

@@ -14,6 +14,7 @@ t0 = Date.now();
 
 // console.log
 if (!window.console) {
+    alert('create console window');
     var con = window.console = {
         doc: null,
         log: function(msg) {

@@ -6,10 +6,10 @@
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-07-15T06:46:02Z
+ * Date: 2014-07-17T11:55:54Z
  */
 (function($){
-    var FAsync, Count = 0, Scripts = {}, Libs = {}, DynamicLoad = !document.all,
+    var FAsync, Count = 0, Scripts = {}, Requires = {}, DynamicLoad = !document.all,
         Config = {
             'path': './',
             'delay': false
@@ -19,29 +19,29 @@
     document.createElement('forceasync');
 
     $.forceAsync = FAsync = function(target){
-        this.$t = $(target);
-        this.id = target.id || 'forceAsync-'+Count++;
-        console.log('forceAsync: find "'+this.id+'"'
-            + ' - ' + (Date.now() - FAsync.t0) + 'ms');
-        this.style = this.$t.parent().attr('style');
-        if (typeof this.style !== 'string') {
-            this.style = '';
+        var self = this;
+        self.$t = $(target);
+        self.id = target.id || 'forceAsync-'+Count++;
+        console.log('forceAsync: find "'+self.id+'"' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+        self.style = self.$t.parent().attr('style');
+        if (typeof self.style !== 'string') {
+            self.style = '';
         }
-        this.html = (target.outerHTML || genOuterHTML(target))
+        self.html = (target.outerHTML || genOuterHTML(target))
                   .replace(/^<forceasync/i,   '<script')
                   .replace(/<\/forceasync>$/i,'<\/script>')
                   .replace(/&lt;/g,   '<')
                   .replace(/&gt;/g,   '>')
                   .replace(/&quot;/g, '"')
                   .replace(/&amp;/g,  '&');
-        this.refresh = (this.$t.data('refresh') || 0) * 1000;
-        this.require =  this.$t.data('require');
-        this.libname =  this.$t.data('name');
-        this.cb = {};
+        self.refresh = (self.$t.data('refresh') || 0) * 1000;
+        self.require =  self.$t.data('require');
+        self.libname =  self.$t.data('name');
+        self.cb = {};
     };
     function genOuterHTML(node) {
         return '<script'
-            + $.map(node.attributes, function(a){
+            + $.map(node.attributes, function(a) {
                   return a.specified ? ' '+a.name+'="'+a.value+'"' : '';
               }).join('')
             + '>' + node.innerHTML + '<\/script>';
@@ -49,69 +49,62 @@
 
     FAsync.prototype = {
         '_frame': function() {
-            return $('<iframe name="'+this.id+'" class="forceAsyncFrame"'
-                + ' style="margin:0;border:0;padding:0;width:100%;height:0;"'
-                + ' marginwidth="0" marginheight="0" frameborder="0"'
-                + ' scrolling="no" allowtransparency="true" seamless />');
+            return $('<iframe name="'+this.id+'" class="forceAsyncFrame" style="width:100%;height:0;margin:0;border:0;padding:0;"'
+                + ' marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowtransparency="true" seamless />');
         },
         'load': function() {
-            var that = this;
-            (that.$f = that._frame()).hide();
-            if (that.reload) {
-                that.$t.before(that.$f);
+            var self = this;
+            (self.$f = self._frame()).hide();
+            if (self.reload) {
+                self.$t.before(self.$f);
             } else {
-                that.$t.replaceWith(that.$f);
-                that.reload = true;
+                self.$t.replaceWith(self.$f);
+                self.reload = true;
             }
-            DynamicLoad ? that._loadD() : that._loadS();
-            that.$f.load(function(){
+            DynamicLoad ? self._loadD() : self._loadS();
+            self.$f.load(function(){
                 setTimeout(function(){
-                    that.$f.show();
-                    that._onload();
+                    self.$f.show();
+                    self.onload();
                 }, 4);
             });
         },
-        '_onload': function() {
-            var that = this, h;
-            if (that.cb.load) {
-                that.cb.load.call(that);
+        'onload': function() {
+            var self = this, h;
+            if (self.cb.load) {
+                self.cb.load(self);
             }
 
-            h = $(that.doc()).height();
-            console.log('forceAsync: onload "'+this.id+'" (' + h + 'px)'
-                + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+            h = $(self.doc()).height();
+            console.log('forceAsync: onload "'+self.id+'" (' + h + 'px)' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
             if (h > 0) {
-                that.$t.remove();
-                that.$t = that.$f.height(h);
+                self.$t.remove();
+                self.$t = self.$f.height(h);
             }
-            if (that.refresh) {
-                setTimeout(function(){ that.load() }, that.refresh);
+            if (self.refresh) {
+                setTimeout(function(){ self.load() }, self.refresh);
             }
         },
         '_loadD': function() {
-            console.log('forceAsync: load "'+this.id+'" to dynamic frame'
-                + ' - ' + (Date.now() - FAsync.t0) + 'ms');
-            var doc = this.doc();
+            var self = this;
+            console.log('forceAsync: load "'+self.id+'" to dynamic frame' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+            var doc = self.doc();
             if (!doc) {
-                console.log('forceAsync: Dynamic load failed "'+this.id+'"');
-                this._loadS();
+                console.log('forceAsync: Dynamic load failed "'+self.id+'"');
+                self._loadS();
                 return;
             }
             doc.open('text/html');
             try {
-                doc.write('<!DOCTYPE html><html>'
-                    + '<head><meta charset=UTF-8"></head>'
-                    + '<body style="margin:0;padding:0;">'
-                    + '<script>document.charset="UTF-8";</script>'
-                    + '<div style="'+this.style+'">' + this.getHtml()
-                    + '</div></body></html>');
+                doc.write('<!DOCTYPE html><html><head><meta charset=UTF-8"></head>'
+                    + '<body style="margin:0;padding:0;"><script>document.charset="UTF-8";</script>'
+                    + self.pretag() + '<div style="'+self.style+'">' + self.tag() + '</div></body></html>');
             }
             catch (e) {}
             finally { doc.close() }
         },
         '_loadS': function() {
-            console.log('forceAsync: load "'+this.id+'" to static frame'
-                + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+            console.log('forceAsync: load "'+this.id+'" to static frame' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
             var frm = this.$f.get(0);
             frm.name = this.id;
             frm.src = Config.path + 'forceAsync.html';
@@ -123,15 +116,11 @@
             var frm = this.$f.get(0), cw = 'contentWindow';
             return frm.contentDocument || frm[cw] && frm[cw].document;
         },
-        'getHtml': function() {
-            var html = this.html;
-            if (this.cb.html) {
-                html = this.cb.html(html);
-            }
-            if (this.require && Libs[this.require]) {
-                html = Libs[this.require].html + html;
-            }
-            return html;
+        'tag': function() {
+            return this.cb.html ? this.cb.html(this.html) : this.html;
+        },
+        'pretag': function() {
+            return this.require && Requires[this.require] ? Requires[this.require].html : '';
         }
     };
 
@@ -146,8 +135,7 @@
             return Scripts[id];
         },
         'exec': function(arg) {
-            console.log('forceAsync: exec'
-                + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+            console.log('forceAsync: exec' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
             if (typeof arg === 'string') {
                 var p = arg, q = arguments[1];
                 if (typeof q !== 'string') {
@@ -163,7 +151,7 @@
             $('forceasync').each(function(){
                 var script = new FAsync(this);
                 if (script.libname) {
-                    (Libs[script.libname] = script).remove();
+                    (Requires[script.libname] = script).remove();
                 } else {
                     $.extend(script.cb, arg);
                     (Scripts[script.id] = script).load();
