@@ -28,7 +28,7 @@ module.exports = (grunt) ->
           'tmp/forceAsync.html': [
             'src/iframe_part_A.html',
             'tmp/iframe_head.min.js',
-            'src/iframe_part_A2.html',
+            'src/iframe_part_B.html',
             'tmp/iframe_main.min.js',
             'src/iframe_part_C.html'
           ]
