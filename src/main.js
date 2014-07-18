@@ -157,5 +157,5 @@
             FAsync.exec();
         }
     });
-    console.log((FAsync.t0 = Date.now()) && 'forceAsync: ready - 0ms');
+    console.log((FAsync.t0 = (Date.now || (Date.now=function(){return (new Date()).getTime()}))()) && 'forceAsync: ready - 0ms');
 })(jQuery);

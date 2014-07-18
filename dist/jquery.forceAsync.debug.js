@@ -6,7 +6,7 @@
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-07-18T07:21:33Z
+ * Date: 2014-07-18T08:37:49Z
  */
 (function($){
     var FAsync, Count = 0, Scripts = {}, Requires = {}, DynamicLoad = !document.all,
@@ -167,5 +167,5 @@
             FAsync.exec();
         }
     });
-    console.log((FAsync.t0 = Date.now()) && 'forceAsync: ready - 0ms');
+    console.log((FAsync.t0 = (Date.now || (Date.now=function(){return (new Date()).getTime()}))()) && 'forceAsync: ready - 0ms');
 })(jQuery);
