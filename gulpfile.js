@@ -1,4 +1,4 @@
-/*global require */
+/* global require */
 
 var pkg   = require('./package.json'),
     gulp  = require('gulp'),
@@ -79,6 +79,7 @@ gulp.task('build', ['clean'], function() {
             .pipe($.uglify({preserveComments: 'some'}))
             .pipe($.sourcemaps.write('./', {includeContent: false}))
             .pipe(gulp.dest('dist')),
+        // make html
         gulp.src('src/forceAsync.html')
             .pipe($.htmlmin({
                 collapseWhitespace: true,
