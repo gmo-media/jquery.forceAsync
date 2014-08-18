@@ -6,7 +6,7 @@
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-08-18T13:46:08Z
+ * Date: 2014-08-18T14:06:15Z
  */
 /* globals jQuery */
 
@@ -80,7 +80,7 @@ if (!Date.now) {
                 self.$t.replaceWith(self.$f);
                 self.reload = true;
             }
-            (DynamicLoad ? self._loadD : self._loadS)();
+            self[DynamicLoad ? '_loadD' : '_loadS']();
             self.$f.load(function(){
                 setTimeout(function(){
                     self.$f.show();
