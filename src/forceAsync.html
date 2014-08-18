@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin:0;padding:0;">
+<div id="c">
+<script>
+document.charset='UTF-8';
+
 function camelize(_, c) {
     return c.toUpperCase();
 }
@@ -27,3 +37,18 @@ if (script) {
     }
     catch (e) {}
 }
+</script>
+<script>
+if (script) {
+    if (script.style !== '') {
+        setStyle(script.style);
+    }
+    try {
+        document.write(script.tag());
+    }
+    catch (e) {}
+}
+</script>
+</div>
+</body>
+</html>

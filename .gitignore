@@ -1,10 +1,4 @@
+.idea/
+*.sublime-*
 node_modules/
-tmp/
-demo/*.js
-demo/sleep_console_js.cgi
-demo/jewel*
-demo/Script*
-demo/Fluct*
-demo/LazyImage*
-demo/Dependent*
-demo/*Micro*
+try/

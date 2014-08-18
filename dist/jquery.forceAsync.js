@@ -1,13 +1,15 @@
 /**
- * jQuery Force Async v0.1.0
+ * jQuery Force Async v0.2.0
  * https://github.com/gmo-media/jquery.forceAsync
  *
  * Copyright 2014 GMO Media,Inc.
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-07-18T12:43:16Z
+ * Date: 2014-08-18T13:46:08Z
  */
+/* globals jQuery */
+
 (function($){
     var FAsync, Count = 0, Scripts = {}, Requires = {}, DynamicLoad = !document.all,
         Config = {
@@ -22,7 +24,6 @@
         var self = this;
         self.$t = $(target);
         self.id = target.id || 'forceAsync-'+Count++;
-        
         self.style = self.$t.parent().attr('style');
         if (typeof self.style !== 'string') {
             self.style = '';
@@ -39,6 +40,7 @@
         self.libname =  self.$t.data('name');
         self.cb = {};
     };
+
     function genOuterHTML(node) {
         return '<script'
             + $.map(node.attributes, function(a) {
@@ -61,7 +63,7 @@
                 self.$t.replaceWith(self.$f);
                 self.reload = true;
             }
-            DynamicLoad ? self._loadD() : self._loadS();
+            (DynamicLoad ? self._loadD : self._loadS)();
             self.$f.load(function(){
                 setTimeout(function(){
                     self.$f.show();
@@ -76,7 +78,6 @@
             }
 
             h = $(self.doc()).height();
-            
             if (h > 0) {
                 self.$t.remove();
                 self.$t = self.$f.height(h);
@@ -87,10 +88,8 @@
         },
         '_loadD': function() {
             var self = this;
-            
             var doc = self.doc();
             if (!doc) {
-                
                 self._loadS();
                 return;
             }
@@ -104,7 +103,6 @@
             finally { doc.close() }
         },
         '_loadS': function() {
-            
             var frm = this.$f.get(0);
             frm.name = this.id;
             frm.src = Config.path + 'forceAsync.html';
@@ -135,7 +133,6 @@
             return Scripts[id];
         },
         'exec': function(arg) {
-            
             if (typeof arg === 'string') {
                 var p = arg, q = arguments[1];
                 if (typeof q !== 'string') {
@@ -167,5 +164,4 @@
             FAsync.exec();
         }
     });
-    
 })(jQuery);

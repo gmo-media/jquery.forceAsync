@@ -1,19 +1,37 @@
 /**
- * jQuery Force Async v0.1.0
+ * jQuery Force Async v0.2.0
  * https://github.com/gmo-media/jquery.forceAsync
  *
  * Copyright 2014 GMO Media,Inc.
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-07-18T12:43:16Z
+ * Date: 2014-08-18T13:46:08Z
  */
+/* globals jQuery */
+
+if (!Date.now) {
+    Date.now = function() { return (new Date()).getTime() };
+}
 (function($){
     var FAsync, Count = 0, Scripts = {}, Requires = {}, DynamicLoad = !document.all,
         Config = {
             'path': './',
             'delay': false
         };
+    var log = function() {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift('forceAsync:');
+        if (args[2]) {
+            args[2] = '"' + args[2] + '"';
+        }
+        if (args[args.length - 1] === false) {
+            args.pop();
+        } else {
+            args.push('-', (Date.now() - FAsync.t0) + 'ms');
+        }
+        console.log(args.join(' '));
+    };
 
     // for legacy IE
     document.createElement('forceasync');
@@ -22,7 +40,7 @@
         var self = this;
         self.$t = $(target);
         self.id = target.id || 'forceAsync-'+Count++;
-        console.log('forceAsync: find "'+self.id+'"' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+        log('find', self.id);
         self.style = self.$t.parent().attr('style');
         if (typeof self.style !== 'string') {
             self.style = '';
@@ -39,6 +57,7 @@
         self.libname =  self.$t.data('name');
         self.cb = {};
     };
+
     function genOuterHTML(node) {
         return '<script'
             + $.map(node.attributes, function(a) {
@@ -61,7 +80,7 @@
                 self.$t.replaceWith(self.$f);
                 self.reload = true;
             }
-            DynamicLoad ? self._loadD() : self._loadS();
+            (DynamicLoad ? self._loadD : self._loadS)();
             self.$f.load(function(){
                 setTimeout(function(){
                     self.$f.show();
@@ -76,7 +95,7 @@
             }
 
             h = $(self.doc()).height();
-            console.log('forceAsync: onload "'+self.id+'" (' + h + 'px)' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+            log('onload', self.id, '('+h+'px)');
             if (h > 0) {
                 self.$t.remove();
                 self.$t = self.$f.height(h);
@@ -87,10 +106,10 @@
         },
         '_loadD': function() {
             var self = this;
-            console.log('forceAsync: load "'+self.id+'" to dynamic frame' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+            log('load', self.id, 'to dynamic frame');
             var doc = self.doc();
             if (!doc) {
-                console.log('forceAsync: Dynamic load failed "'+self.id+'"');
+                log('Dynamic load failed', self.id, false);
                 self._loadS();
                 return;
             }
@@ -104,7 +123,7 @@
             finally { doc.close() }
         },
         '_loadS': function() {
-            console.log('forceAsync: load "'+this.id+'" to static frame' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+            log('load', this.id, 'to static frame');
             var frm = this.$f.get(0);
             frm.name = this.id;
             frm.src = Config.path + 'forceAsync.html';
@@ -135,7 +154,7 @@
             return Scripts[id];
         },
         'exec': function(arg) {
-            console.log('forceAsync: exec' + ' - ' + (Date.now() - FAsync.t0) + 'ms');
+            log('exec');
             if (typeof arg === 'string') {
                 var p = arg, q = arguments[1];
                 if (typeof q !== 'string') {
@@ -167,5 +186,6 @@
             FAsync.exec();
         }
     });
-    console.log((FAsync.t0 = (Date.now || (Date.now=function(){return (new Date()).getTime()}))()) && 'forceAsync: ready - 0ms');
+    FAsync.t0 = Date.now();
+    log('ready - 0ms');
 })(jQuery);
