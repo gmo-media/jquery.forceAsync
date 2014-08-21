@@ -6,7 +6,7 @@
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-08-18T14:06:16Z
+ * Date: 2014-08-20T09:08:47Z
  */
 /* globals jQuery */
 
