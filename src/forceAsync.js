@@ -143,7 +143,14 @@ if (!Date.now) {
             return this.cb.html ? this.cb.html(this.html) : this.html;
         },
         'pretag': function() {
-            return this.require && Requires[this.require] ? Requires[this.require].html : '';
+            var tag = '', keys, i, n;
+            if (this.require) {
+                keys = this.require.split(/, */);
+                for (i = 0, n = keys.length; i < n; i++) {
+                    tag += Requires[keys[i]] ? Requires[keys[i]].html : '';
+                }
+            }
+            return tag;
         }
     };
 

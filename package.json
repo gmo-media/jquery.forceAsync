@@ -1,8 +1,8 @@
 {
   "title": "jQuery Force Async",
   "name": "jquery.forceAsync",
-  "version": "0.2.0",
-  "description": "Load any script asynchronously.",
+  "version": "0.3.0",
+  "description": "Load legacy script asynchronously.",
   "keywords": [
     "script",
     "loader",

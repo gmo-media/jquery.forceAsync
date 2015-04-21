@@ -1,12 +1,12 @@
 /**
- * jQuery Force Async v0.2.0
+ * jQuery Force Async v0.3.0
  * https://github.com/gmo-media/jquery.forceAsync
  *
  * Copyright 2014 GMO Media,Inc.
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2014-08-20T09:08:47Z
+ * Date: 2015-04-21T10:45:30Z
  */
 /* globals jQuery */
 
@@ -139,7 +139,14 @@ if (!Date.now) {
             return this.cb.html ? this.cb.html(this.html) : this.html;
         },
         'pretag': function() {
-            return this.require && Requires[this.require] ? Requires[this.require].html : '';
+            var tag = '', keys, i, n;
+            if (this.require) {
+                keys = this.require.split(/, */);
+                for (i = 0, n = keys.length; i < n; i++) {
+                    tag += Requires[keys[i]] ? Requires[keys[i]].html : '';
+                }
+            }
+            return tag;
         }
     };
 
