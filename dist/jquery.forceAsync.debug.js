@@ -1,12 +1,12 @@
 /**
- * jQuery Force Async v0.3.0
+ * jQuery Force Async v1.0.0
  * https://github.com/gmo-media/jquery.forceAsync
  *
  * Copyright 2014 GMO Media,Inc.
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2015-05-21T11:17:45Z
+ * Date: 2015-05-21T11:27:54Z
  */
 /* globals jQuery */
 
