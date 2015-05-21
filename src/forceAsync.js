@@ -117,9 +117,12 @@ if (!Date.now) {
             }
             doc.open('text/html');
             try {
-                doc.write('<!DOCTYPE html><html><head><meta charset=UTF-8"></head>'
-                    + '<body style="margin:0;padding:0;"><script>document.charset="UTF-8";</script>'
-                    + self.pretag() + '<div style="'+self.style+'">' + self.tag() + '</div></body></html>');
+                doc.write('<!DOCTYPE html><html><head><meta charset=UTF-8">'
+                    + '<base target="_blank"></head>'
+                    + '<body style="margin:0;padding:0;">'
+                    + '<script>document.charset="UTF-8";</script>'
+                    + self.pretag() + '<div style="'+self.style+'">'
+                    + self.tag() + '</div></body></html>');
             }
             catch (e) {}
             finally { doc.close() }
