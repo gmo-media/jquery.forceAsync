@@ -1,7 +1,7 @@
 {
   "title": "jQuery Force Async",
   "name": "jquery.forceAsync",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Load legacy script asynchronously.",
   "keywords": [
     "script",
