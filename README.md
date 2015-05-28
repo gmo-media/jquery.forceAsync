@@ -115,7 +115,8 @@
 <script>$.forceAsync.exec();</script>
 ```
 
-これはそれまでに現れたすべてのforceasyncタグを実行するので、forceasyncタグごとに書いてもいいし、いくつかの指定の後に書いても構いません。
+それまでに現れたすべてのforceasyncタグを実行します。
+forceasyncタグごとに書いてもいいし、いくつかの指定の後に書いても構いません。
 `$(document).ready()`でもこれを呼んでいるだけです。
 
 ### スクリプトの遅延読み込み
@@ -126,6 +127,8 @@ window.onloadが発火する前に新たなリソースを読み込み始めて�
 ```html
 <script>$.forceAsync.config({path:'../jquery/forceAsync/', delay:true});</script>
 ```
+
+あるいは、window.onload発火後に jquery.forceAsync.js を読み込んでも同様の効果が得られます。
 
 ### スクリプトの自動再読み込み
 
@@ -154,22 +157,6 @@ document.write('<link rel="stylesheet" type="text/css" href="http://example.com/
 </forceasync>
 <forceasync data-require="common-css" src="seamless.js"></forceasync>
 ```
-
-## execメソッドの引数について
-
-早期読み込みをするための`exec`メソッドには、以下の形式で引数を渡すことができます。
-
-- `exec(pre_string, post_string)`
-    - 出力されるスクリプトタグの前後に文字列を挿入できます。
-    - post_stringは省略可能です。
-- `exec({オブジェクト})`
-    - 以下のコールバック関数を登録できます。
-    - `html`
-        - 出力するスクリプトタグを加工することができます。
-        - 第1引数に元のスクリプトタグの内容が渡されるので、それを加工した内容を返却してください。
-    - `load`
-        - スクリプトがロードしたiframeのonloadが発火した際（iframeの高さを設定する前）に呼び出されます。
-        - 第1引数にforceAsyncオブジェクトが渡されます。
 
 ## 注意
 

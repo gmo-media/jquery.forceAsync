@@ -51,7 +51,6 @@ if (!Date.now) {
         self.refresh = (self.$t.data('refresh') || 0) * 1000;
         self.require =  self.$t.data('require');
         self.libname =  self.$t.data('name');
-        self.cb = {};
     };
 
     function genOuterHTML(node) {
@@ -65,30 +64,27 @@ if (!Date.now) {
     FAsync.prototype = {
         '_frame': function() {
             return $('<iframe name="'+this.id+'" class="forceAsyncFrame" style="width:100%;height:0;margin:0;border:0;padding:0;"'
-                + ' marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowtransparency="true" seamless />');
+                + ' marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowtransparency="true" seamless/>');
         },
         'load': function() {
-            var self = this;
-            (self.$f = self._frame()).hide();
+            var self = this,
+                $div = $('<div/>').append((self.$f = self._frame()).hide());
             if (self.reload) {
-                self.$t.before(self.$f);
+                self.$t.before($div);
             } else {
-                self.$t.replaceWith(self.$f);
+                self.$t.replaceWith($div);
                 self.reload = true;
             }
-            self[DynamicLoad ? '_loadD' : '_loadS']();
             self.$f.load(function(){
                 setTimeout(function(){
                     self.$f.show();
                     self.onload();
                 }, 4);
             });
+            self[DynamicLoad ? '_loadD' : '_loadS']();
         },
         'onload': function() {
             var self = this, h;
-            if (self.cb.load) {
-                self.cb.load(self);
-            }
 
             h = $(self.doc()).height();
 /* DEBUG */
@@ -96,7 +92,7 @@ if (!Date.now) {
 /* END */
             if (h > 0) {
                 self.$t.remove();
-                self.$t = self.$f.height(h);
+                self.$t = self.$f.height(h).parent().height(h);
             }
             if (self.refresh) {
                 setTimeout(function(){ self.load() }, self.refresh);
@@ -117,12 +113,12 @@ if (!Date.now) {
             }
             doc.open('text/html');
             try {
-                doc.write('<!DOCTYPE html><html><head><meta charset=UTF-8">'
+                doc.write('<!DOCTYPE html><html><head><meta charset=utf-8">'
                     + '<base target="_blank"></head>'
                     + '<body style="margin:0;padding:0;">'
-                    + '<script>document.charset="UTF-8";</script>'
+                    + '<script>document.charset="utf-8";</script>'
                     + self.pretag() + '<div style="'+self.style+'">'
-                    + self.tag() + '</div></body></html>');
+                    + self.html + '</div></body></html>');
             }
             catch (e) {}
             finally { doc.close() }
@@ -141,9 +137,6 @@ if (!Date.now) {
         'doc': function() {
             var frm = this.$f.get(0), cw = 'contentWindow';
             return frm.contentDocument || frm[cw] && frm[cw].document;
-        },
-        'tag': function() {
-            return this.cb.html ? this.cb.html(this.html) : this.html;
         },
         'pretag': function() {
             var tag = '', keys, i, n;
@@ -167,28 +160,15 @@ if (!Date.now) {
         'getScript': function(id) {
             return Scripts[id];
         },
-        'exec': function(arg) {
+        'exec': function() {
 /* DEBUG */
             log('exec');
 /* END */
-            if (typeof arg === 'string') {
-                var p = arg, q = arguments[1];
-                if (typeof q !== 'string') {
-                    q = '';
-                }
-                arg = {
-                    'html': function(html) { return p + html + q }
-                };
-            }
-            else if (typeof arg !== 'object') {
-                arg = {};
-            }
             $('forceasync').each(function(){
                 var script = new FAsync(this);
                 if (script.libname) {
                     (Requires[script.libname] = script).remove();
                 } else {
-                    $.extend(script.cb, arg);
                     (Scripts[script.id] = script).load();
                 }
             });
@@ -199,11 +179,11 @@ if (!Date.now) {
         if (Config.delay) {
             $(window).load(FAsync.exec);
         } else {
-            FAsync.exec();
+            setTimeout(FAsync.exec,0);
         }
     });
 /* DEBUG */
     FAsync.t0 = Date.now();
-    log('ready - 0ms');
+    log('ready', false);
 /* END */
 })(jQuery);
