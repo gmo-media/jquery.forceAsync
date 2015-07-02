@@ -3,7 +3,7 @@
   "version": "1.1.1",
   "homepage": "https://github.com/gmo-media/jquery.forceAsync",
   "authors": [
-    "GMO Media,Inc. (http://www.gmo-media.jp)"
+    "GMO Media,Inc."
   ],
   "description": "Load legacy script asynchronously.",
   "main": [
@@ -14,9 +14,6 @@
     "type": "git",
     "url": "git://github.com/gmo-media/jquery.forceAsync.git"
   },
-  "moduleType": [
-    "globals"
-  ],
   "keywords": [
     "script",
     "loader",
