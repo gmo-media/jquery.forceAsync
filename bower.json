@@ -3,7 +3,7 @@
   "version": "1.1.1",
   "homepage": "https://github.com/gmo-media/jquery.forceAsync",
   "authors": [
-    { "name": "GMO Media,Inc.", "homepage": "http://www.gmo-media.jp/" }
+    "GMO Media,Inc."
   ],
   "description": "Load legacy script asynchronously.",
   "main": [
