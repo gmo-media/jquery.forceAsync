@@ -7,8 +7,8 @@
   ],
   "description": "Load legacy script asynchronously.",
   "main": [
-    "dist/jquery.forceAsync.html"
-    "dist/jquery.forceAsync.js",
+    "dist/jquery.forceAsync.html",
+    "dist/jquery.forceAsync.js"
   ],
   "keywords": [
     "script",
