@@ -11,15 +11,17 @@
 ## 使い方
 
 １．まず、`dist/`以下のファイルをサーバに配置します。（ここでは`../jquery/forceAsync/`に配置したものとします。）
-  - スクリプトはCDNなどに置いても構いませんが、`forceAsync.html`だけはサイトと同じサーバに置いてください。（正確には同じオリジンで参照できる場所）
+
+- スクリプトはCDNなどに置いても構いませんが、`forceAsync.html`だけはサイトと同じサーバに置いてください。（正確には同じオリジンで参照できる場所）
 
 ２．次に、ページのどこか（jQuery本体の読み込みより後）に以下のタグを記述します。
 
-  ```html
-  <script src="../jquery/forceAsync/jquery.forceAsync.min.js"></script>
-  <script>$.forceAsync.config({path:'../jquery/forceAsync/'});</script>
-  ```
-  - `path`には`forceAsync.html`へのパスを指定してください。絶対パスでも大丈夫です。
+```html
+<script src="../jquery/forceAsync/jquery.forceAsync.min.js"></script>
+<script>$.forceAsync.config({path:'../jquery/forceAsync/'});</script>
+```
+
+- `path`には`forceAsync.html`へのパスを指定してください。絶対パスでも大丈夫です。
 
 ３．最後に、非同期化したいスクリプトの`script`タグを`forceasync`タグに変更します。閉じタグを直すのも忘れずに。
 
