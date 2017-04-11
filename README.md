@@ -184,12 +184,12 @@ demoのHTMLが動作することを確認した環境です。
 ### Mac
 
 - Safari 7.0
-- Chrome 31.0
+- Chrome 31.0 ~ 57.0
 - Firefox 27.0
 
 ### iOS
 
-- Safari - iOS 7.0
+- Safari - iOS 7.0 ~ 10.3.1
 
 ### Android
 
