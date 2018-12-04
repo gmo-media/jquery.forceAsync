@@ -38,7 +38,7 @@
   "devDependencies": {
     "del": "^3.0.0",
     "event-stream": "^4.0.1",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-header": "^2.0.5",
     "gulp-htmlhint": "^2.2.1",
     "gulp-htmlmin": "^5.0.1",

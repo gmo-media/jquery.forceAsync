@@ -6,7 +6,7 @@
  * Released under the MIT license
  * https://github.com/gmo-media/jquery.forceAsync/blob/master/LICENSE
  *
- * Date: 2018-12-04T03:28:44Z
+ * Date: 2018-12-04T03:59:17Z
  */
 if (!Date.now) {
     Date.now = function() { return (new Date()).getTime() };
