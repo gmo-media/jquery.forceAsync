@@ -1,16 +1,23 @@
 {
-    // Enforcing options
-    "indent": false,
-    "maxparams": 3,
-    "maxdepth": 3,
-    "maxstatements": 20,
+    "curly": true,
+    "eqeqeq": true,
+    "esversion": 5,
+    "globals": {
+      "jQuery": false
+    },
     "maxcomplexity": 5,
+    "maxdepth": 3,
     "maxlen": 160,
+    "maxparams": 3,
+    "maxstatements": 20,
+    "nocomma": true,
     "quotmark": "single",
-    "strict": false,
+    "undef": true,
+    "unused": true,
 
-    // Relaxing options
     "evil": true,
     "lastsemic": true,
-    "laxbreak": true
+
+    "browser": true,
+    "devel": true
 }

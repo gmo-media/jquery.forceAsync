@@ -55,8 +55,8 @@ gulp.task('default', function() {
     gulp.watch('src/forceAsync.html', ['htmlhint']);
 });
 
-gulp.task('clean', function(cb) {
-    del('dist/*', cb);
+gulp.task('clean', function() {
+    return del('dist/*');
 });
 
 gulp.task('build', ['clean'], function() {
@@ -73,11 +73,9 @@ gulp.task('build', ['clean'], function() {
             .pipe($.banner())
             .pipe($.disableDebug())
             .pipe(gulp.dest('dist'))
-            .pipe($.sourcemaps.init())
             .pipe($.rename({suffix: '.min'}))
+            .pipe($.uglify())
             .pipe($.minBanner())
-            .pipe($.uglify({preserveComments: 'some'}))
-            .pipe($.sourcemaps.write('./', {includeContent: false}))
             .pipe(gulp.dest('dist')),
         // make html
         gulp.src('src/forceAsync.html')

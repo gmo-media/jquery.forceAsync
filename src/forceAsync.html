@@ -2,12 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>forceAsync</title>
 <base target="_blank">
 </head>
 <body style="margin:0;padding:0;">
 <div id="c">
 <script>
-document.charset='UTF-8';
+document.charset = 'UTF-8';
 
 function camelize(_, c) {
     return c.toUpperCase();
@@ -16,8 +17,8 @@ function camelize(_, c) {
 function setStyle(style) {
     var styles = style.split(/; */),
         container = document.getElementById('c'),
-        i, len, kv;
-    for (i = 0, len = styles.length; i < len; i++) {
+        i = 0, len, kv;
+    for (len = styles.length; i < len; i++) {
         kv = styles[i].split(/: */);
         kv[0] = kv[0].replace(/-(.)/g, camelize);
         try {
@@ -38,8 +39,7 @@ if (script) {
     }
     catch (e) {}
 }
-</script>
-<script>
+
 if (script) {
     if (script.style !== '') {
         setStyle(script.style);

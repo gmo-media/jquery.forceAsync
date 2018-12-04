@@ -1,5 +1,3 @@
-/* globals jQuery */
-
 /* DEBUG */
 if (!Date.now) {
     Date.now = function() { return (new Date()).getTime() };
@@ -54,17 +52,17 @@ if (!Date.now) {
     };
 
     function genOuterHTML(node) {
-        return '<script'
-            + $.map(node.attributes, function(a) {
-                  return a.specified ? ' '+a.name+'="'+a.value+'"' : '';
-              }).join('')
-            + '>' + node.innerHTML + '<\/script>';
+        return '<script' +
+            $.map(node.attributes, function(a) {
+                return a.specified ? ' '+a.name+'="'+a.value+'"' : '';
+            }).join('') +
+            '>' + node.innerHTML + '<\/script>';
     }
 
     FAsync.prototype = {
         '_frame': function() {
-            return $('<iframe name="'+this.id+'" class="forceAsyncFrame" style="width:100%;height:0;margin:0;border:0;padding:0;"'
-                + ' marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowtransparency="true" seamless/>');
+            return $('<iframe name="'+this.id+'" class="forceAsyncFrame" style="width:100%;height:0;margin:0;border:0;padding:0;"' +
+                ' marginwidth="0" marginheight="0" frameborder="0" scrolling="no" allowtransparency="true" seamless/>');
         },
         'load': function() {
             var self = this,
@@ -113,12 +111,12 @@ if (!Date.now) {
             }
             doc.open('text/html');
             try {
-                doc.write('<!DOCTYPE html><html><head><meta charset=utf-8">'
-                    + '<base target="_blank"></head>'
-                    + '<body style="margin:0;padding:0;">'
-                    + '<script>document.charset="utf-8";</script>'
-                    + self.pretag() + '<div style="'+self.style+'">'
-                    + self.html + '</div></body></html>');
+                doc.write('<!DOCTYPE html><html><head><meta charset=utf-8">' +
+                    '<base target="_blank"></head>' +
+                    '<body style="margin:0;padding:0;">' +
+                    '<script>document.charset="utf-8";</script>' +
+                    self.pretag() + '<div style="'+self.style+'">' +
+                    self.html + '</div></body></html>');
             }
             catch (e) {}
             finally { doc.close() }
@@ -139,10 +137,10 @@ if (!Date.now) {
             return frm.contentDocument || frm[cw] && frm[cw].document;
         },
         'pretag': function() {
-            var tag = '', keys, i, n;
+            var tag = '', i = 0, keys, n;
             if (this.require) {
                 keys = this.require.split(/, */);
-                for (i = 0, n = keys.length; i < n; i++) {
+                for (n = keys.length; i < n; i++) {
                     tag += Requires[keys[i]] ? Requires[keys[i]].html : '';
                 }
             }
