@@ -3,7 +3,6 @@
 var pkg   = require('./package.json'),
     gulp  = require('gulp'),
     $     = require('gulp-load-plugins')(),
-    merge = require('event-stream').merge,
     del   = require('del');
 
 var jshint_options = require('jshint/src/cli').loadConfig('.jshintrc');
